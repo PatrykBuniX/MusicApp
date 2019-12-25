@@ -4,10 +4,9 @@ import { fetchSongs } from "../redux/actions/songsActions";
 import styled from "styled-components";
 
 const BarWrapper = styled.div`
-  /* flex: 1 1 auto; */
   width: 100%;
   height: 10vh;
-  min-height: 70px;
+  position: fixed;
   background: linear-gradient(to right, #20a5c7 0%, #03568a 100%);
   display: flex;
   justify-content: space-around;

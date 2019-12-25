@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchSongs } from "../redux/actions/songsActions";
+import { fetchSongs, handleClick } from "../redux/actions/songsActions";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
   flex: 1 1 auto;
+  margin-top: 10vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   background: linear-gradient(to right, #bef2fa 0%, #c2d1ff 100%);
@@ -58,7 +59,11 @@ const SongsList = props => {
           {songs &&
             songs.map((song, i) => {
               return (
-                <ListItem key={i}>
+                <ListItem
+                  data-song={song.preview}
+                  onClick={e => props.handleClick(e)}
+                  key={i}
+                >
                   <div>
                     <Title>{song.title}</Title>
                     <Artist>{song.artist.name}</Artist>
@@ -89,7 +94,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadMore: query => dispatch(fetchSongs(query))
+    handleClick: e => dispatch(handleClick(e))
   };
 };
 

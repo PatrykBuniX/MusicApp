@@ -1,4 +1,4 @@
-const initState = { songs: [], index: 0, lastQuery: null };
+const initState = { songs: [], index: 0, lastQuery: null, activeSong: "" };
 
 const songsReducer = (state = initState, action) => {
   switch (action.type) {
@@ -24,6 +24,10 @@ const songsReducer = (state = initState, action) => {
     case "GET_SONGS_ERROR":
       console.log("get songs error", action.err);
       return state;
+    case "SET_SONG":
+      console.log(state);
+      console.log("click", action.event.target.dataset.song);
+      return { ...state, activeSong: action.event.target.dataset.song };
     default:
       return state;
   }

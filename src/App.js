@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 //import other components:
 import SearchBar from "./components/SearchBar";
 import SongsList from "./components/SongsList";
+import Player from "./components/Player";
 
 const GlobalStyle = createGlobalStyle`
   *, ::before, ::after{
@@ -25,6 +26,7 @@ const App = () => {
       <GlobalStyle />
       <SearchBar />
       <SongsList />
+      <Player />
     </AppWrapper>
   );
 };

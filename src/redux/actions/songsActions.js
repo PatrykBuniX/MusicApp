@@ -18,7 +18,7 @@ export const fetchSongs = query => {
       );
       const newIndex = getState().index + 25;
       const { data: songs } = res.data;
-      if (query === getState().lastQuery || getState().lastQuery === null) {
+      if (query === getState().lastQuery) {
         dispatch({
           type: "GET_MORE_SONGS",
           songs,
@@ -36,5 +36,11 @@ export const fetchSongs = query => {
     } catch (err) {
       dispatch({ type: "GET_SONGS_ERROR", err });
     }
+  };
+};
+
+export const handleClick = e => {
+  return dispatch => {
+    dispatch({ type: "SET_SONG", event: e });
   };
 };
