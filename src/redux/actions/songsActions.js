@@ -5,6 +5,7 @@ const base = "https://deezerdevs-deezer.p.rapidapi.com";
 
 export const fetchSongs = query => {
   return async (dispatch, getState) => {
+    if (!query) return;
     try {
       const res = await axios.get(
         `${base}/search?q=${query}&index=${getState().index}`,
@@ -17,7 +18,21 @@ export const fetchSongs = query => {
       );
       const newIndex = getState().index + 25;
       const { data: songs } = res.data;
-      dispatch({ type: "GET_SONGS", songs, index: newIndex });
+      if (query === getState().lastQuery || getState().lastQuery === null) {
+        dispatch({
+          type: "GET_MORE_SONGS",
+          songs,
+          index: newIndex,
+          lastQuery: query
+        });
+      } else {
+        dispatch({
+          type: "GET_SONGS",
+          songs,
+          index: 0,
+          lastQuery: query
+        });
+      }
     } catch (err) {
       dispatch({ type: "GET_SONGS_ERROR", err });
     }

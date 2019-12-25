@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { fetchSongs } from "../redux/actions/songsActions";
 import styled from "styled-components";
@@ -19,8 +19,9 @@ const SearchBar = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    e.target.reset();
     props.getSongs(search);
+    e.target.reset();
+    setSearch("");
   };
   const handleChange = e => {
     setSearch(e.target.value);

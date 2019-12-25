@@ -50,8 +50,7 @@ const Album = styled.img`
 `;
 
 const SongsList = props => {
-  const { songs } = props.state;
-  console.log(songs);
+  const { songs, lastQuery } = props.state;
   return (
     <Wrapper>
       {
@@ -63,7 +62,11 @@ const SongsList = props => {
                   <div>
                     <Title>{song.title}</Title>
                     <Artist>{song.artist.name}</Artist>
-                    <a target="_blank" href={song.preview}>
+                    <a
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      href={song.preview}
+                    >
                       link
                     </a>
                   </div>
@@ -74,9 +77,7 @@ const SongsList = props => {
         </List>
       }
       {songs.length >= 1 && (
-        <Button onClick={() => props.loadMore("donguralesko")}>
-          load more...
-        </Button>
+        <Button onClick={() => props.loadMore(lastQuery)}>load more...</Button>
       )}
     </Wrapper>
   );
