@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import axios from "axios";
 //import other components:
 import SearchBar from "./components/SearchBar";
 import SongsList from "./components/SongsList";
@@ -18,13 +17,11 @@ const AppWrapper = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 const App = () => {
   return (
-    <AppWrapper>
+    <AppWrapper id="mainwrapper">
       <GlobalStyle />
       <SearchBar />
       <SongsList />

@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchSongs } from "../redux/actions/songsActions";
 import styled from "styled-components";
 
 const BarWrapper = styled.div`
+  /* flex: 1 1 auto; */
   width: 100%;
-  height: 10%;
+  height: 10vh;
+  min-height: 70px;
   background: linear-gradient(to right, #20a5c7 0%, #03568a 100%);
   display: flex;
   justify-content: space-around;
@@ -14,6 +16,8 @@ const BarWrapper = styled.div`
 
 const SearchBar = props => {
   const [search, setSearch] = useState("");
+
+  useEffect(() => props.getSongs("donguralesko"), []);
 
   const handleSubmit = e => {
     e.preventDefault();

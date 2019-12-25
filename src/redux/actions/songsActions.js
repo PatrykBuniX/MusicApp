@@ -5,7 +5,6 @@ const base = "https://deezerdevs-deezer.p.rapidapi.com";
 
 export const fetchSongs = query => {
   return async (dispatch, getState) => {
-    console.log(getState());
     try {
       const res = await axios.get(
         `${base}/search?q=${query}&index=${getState().index}`,
