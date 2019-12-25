@@ -23,7 +23,9 @@ const ListItem = styled.li`
   height: 10vh;
   max-height: 80px;
   background: white;
-  border: 1px solid gray;
+  border: 2px solid black;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Button = styled.button`
@@ -34,15 +36,40 @@ const Button = styled.button`
   margin: 2% auto;
 `;
 
+const Title = styled.p`
+  font-size: 0.9em;
+`;
+const Artist = styled.p`
+  font-size: 0.8em;
+  color: grey;
+`;
+
+const Album = styled.img`
+  height: 100%;
+  border-left: 2px solid black;
+`;
+
 const SongsList = props => {
   const { songs } = props.state;
+  console.log(songs);
   return (
     <Wrapper>
       {
         <List>
           {songs &&
             songs.map((song, i) => {
-              return <ListItem key={i}>{song.title}</ListItem>;
+              return (
+                <ListItem key={i}>
+                  <div>
+                    <Title>{song.title}</Title>
+                    <Artist>{song.artist.name}</Artist>
+                    <a target="_blank" href={song.preview}>
+                      link
+                    </a>
+                  </div>
+                  <Album alt="album" src={song.album.cover} />
+                </ListItem>
+              );
             })}
         </List>
       }

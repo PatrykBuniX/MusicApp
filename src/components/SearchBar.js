@@ -17,8 +17,6 @@ const BarWrapper = styled.div`
 const SearchBar = props => {
   const [search, setSearch] = useState("");
 
-  useEffect(() => props.getSongs("donguralesko"), []);
-
   const handleSubmit = e => {
     e.preventDefault();
     e.target.reset();
