@@ -56,6 +56,7 @@ const Album = styled.img`
 
 const SongsList = props => {
   const { songs, lastQuery } = props.state;
+  console.log(songs);
   return (
     <Wrapper>
       {
@@ -69,7 +70,7 @@ const SongsList = props => {
                   key={i}
                 >
                   <div>
-                    <Title>{song.title}</Title>
+                    <Title>{song.title_short}</Title>
                     <Artist>{song.artist.name}</Artist>
                     <a
                       rel="noopener noreferrer"
@@ -98,6 +99,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    loadMore: query => dispatch(fetchSongs(query)),
     playSong: e => dispatch(playSong(e))
   };
 };
