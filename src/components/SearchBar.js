@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { fetchSongs } from "../redux/actions/songsActions";
 import styled from "styled-components";
 
 const BarWrapper = styled.div`
@@ -31,5 +33,10 @@ const SearchBar = props => {
     </BarWrapper>
   );
 };
+const mapDispatchToProps = dispatch => {
+  return {
+    getSongs: query => dispatch(fetchSongs(query))
+  };
+};
 
-export default SearchBar;
+export default connect(null, mapDispatchToProps)(SearchBar);

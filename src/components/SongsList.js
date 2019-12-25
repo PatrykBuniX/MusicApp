@@ -1,6 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import { fetchSongs } from "../redux/actions/songsActions";
 import styled from "styled-components";
-
 const SongsWrapper = styled.div`
   flex: 1;
   width: 100%;
@@ -9,21 +10,19 @@ const SongsWrapper = styled.div`
 `;
 
 const SongsList = props => {
-  const { songs } = props.data;
-  console.log(typeof songs);
+  const { songs } = props.state;
+  // setInterval(() => console.log(songs), 2000);
   return (
     <SongsWrapper>
       {
         <ul>
           {songs &&
-            songs.map(song => {
-              return (
-                <li key={Math.floor(Math.random() * 10000)}>{song.title}</li>
-              );
+            songs.map((song, i) => {
+              return <li key={i}>{song.title}</li>;
             })}
         </ul>
       }
-      {songs && (
+      {songs.length >= 1 && (
         <button onClick={() => props.loadMore("donguralesko")}>
           load more...
         </button>
@@ -32,4 +31,14 @@ const SongsList = props => {
   );
 };
 
-export default SongsList;
+const mapStateToProps = state => {
+  return { state };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadMore: query => dispatch(fetchSongs(query))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SongsList);
