@@ -25,9 +25,8 @@ const songsReducer = (state = initState, action) => {
       console.log("get songs error", action.err);
       return state;
     case "SET_SONG":
-      console.log(state);
-      console.log("click", action.event.target.dataset.song);
-      return { ...state, activeSong: action.event.target.dataset.song };
+      console.log("set song", action.activeSong);
+      return { ...state, activeSong: action.activeSong };
     default:
       return state;
   }

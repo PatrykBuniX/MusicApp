@@ -1,6 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchSongs, handleClick } from "../redux/actions/songsActions";
+import {
+  fetchSongs,
+  handleClick,
+  playSong
+} from "../redux/actions/songsActions";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -61,7 +65,7 @@ const SongsList = props => {
               return (
                 <ListItem
                   data-song={song.preview}
-                  onClick={e => props.handleClick(e)}
+                  onClick={e => props.playSong(e)}
                   key={i}
                 >
                   <div>
@@ -94,7 +98,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleClick: e => dispatch(handleClick(e))
+    playSong: e => dispatch(playSong(e))
   };
 };
 

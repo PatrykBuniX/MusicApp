@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { fetchSongs } from "../redux/actions/songsActions";
+import { playSong } from "../redux/actions/songsActions";
 import styled from "styled-components";
 
 const PlayerWrapper = styled.div`
@@ -16,17 +16,10 @@ const PlayerWrapper = styled.div`
 const Player = props => {
   const { activeSong } = props.state;
 
-  const playSong = e => {
-    if (!activeSong) return;
-    const audio = e.target.previousElementSibling;
-    console.log(audio, activeSong);
-    audio.play();
-  };
-
   return (
     <PlayerWrapper>
       <audio src={activeSong}></audio>
-      <button onClick={playSong}>play</button>
+      <button onClick={e => props.playSong(e)}>play</button>
     </PlayerWrapper>
   );
 };
@@ -37,7 +30,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSongs: query => dispatch(fetchSongs(query))
+    playSong: e => dispatch(playSong(e))
   };
 };
 
