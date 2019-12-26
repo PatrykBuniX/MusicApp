@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import {
   fetchSongs,
   handleClick,
-  playSong
+  setSong
 } from "../redux/actions/songsActions";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
   flex: 1 1 auto;
-  margin-top: 10vh;
+  margin: 10vh 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   background: linear-gradient(to right, #bef2fa 0%, #c2d1ff 100%);
@@ -55,6 +55,15 @@ const Album = styled.img`
 `;
 
 const SongsList = props => {
+  const playSong = e => {
+    const src = e.target.dataset.song;
+    if (!src) return;
+    const audio = document.querySelector("audio");
+    audio.src = src;
+    audio.play();
+    // props.setSong(src);
+  };
+
   const { songs, lastQuery } = props.state;
   console.log(songs);
   return (
@@ -66,7 +75,7 @@ const SongsList = props => {
               return (
                 <ListItem
                   data-song={song.preview}
-                  onClick={e => props.playSong(e)}
+                  onClick={e => playSong(e)}
                   key={i}
                 >
                   <div>
@@ -100,7 +109,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadMore: query => dispatch(fetchSongs(query)),
-    playSong: e => dispatch(playSong(e))
+    setSong: src => dispatch(setSong(src))
   };
 };
 

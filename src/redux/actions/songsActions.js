@@ -39,13 +39,8 @@ export const fetchSongs = query => {
   };
 };
 
-export const playSong = e => {
-  return async (dispatch, getState) => {
-    const src = e.target.dataset.song || getState().activeSong;
-    if (!src) return;
-    const audio = document.querySelector("audio");
-    audio.src = src;
-    await dispatch({ type: "SET_SONG", activeSong: src });
-    audio.play();
+export const setSong = src => {
+  return dispatch => {
+    dispatch({ type: "SET_SONG", activeSong: src });
   };
 };
