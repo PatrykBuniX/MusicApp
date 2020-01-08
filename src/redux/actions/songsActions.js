@@ -39,8 +39,8 @@ export const fetchSongs = query => {
   };
 };
 
-export const setSongs = sources => {
+export const setSongs = elements => {
   return dispatch => {
-    dispatch({ type: "SET_SONGS", songs: sources });
+    dispatch({ type: "SET_SONGS", elements: elements });
   };
 };

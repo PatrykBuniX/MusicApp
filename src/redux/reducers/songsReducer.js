@@ -25,8 +25,8 @@ const songsReducer = (state = initState, action) => {
       console.log("get songs error", action.err);
       return state;
     case "SET_SONGS":
-      console.log("set songs", action.songs);
-      return { ...state, three: action.songs };
+      console.log("set songs", action.elements);
+      return { ...state, elements: action.elements };
     default:
       return state;
   }

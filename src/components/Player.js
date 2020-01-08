@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-// import { setSong } from "../redux/actions/songsActions";
+import { setSongs } from "../redux/actions/songsActions";
 import styled from "styled-components";
 
 const PlayerWrapper = styled.div`
@@ -15,12 +15,12 @@ const PlayerWrapper = styled.div`
 `;
 
 const Player = props => {
-  const initialThree = {
+  const initElements = {
     prev: null,
     current: null,
     next: null
   };
-  const { prev, current, next } = props.state.three || initialThree;
+  const { prev, current, next } = props.state.elements || initElements;
 
   console.log(prev, current, next);
 
@@ -31,12 +31,29 @@ const Player = props => {
     await audio.play();
   };
 
+  const playPrev = src => {
+    props.setSongs({
+      prev: prev.previousElementSibling,
+      current: prev,
+      next: current
+    });
+    playSong(src);
+  };
+  const playNext = src => {
+    props.setSongs({
+      prev: current,
+      current: next,
+      next: next.nextElementSibling
+    });
+    playSong(src);
+  };
+
   return (
     <PlayerWrapper>
       <audio src=""></audio>
-      <button onClick={() => playSong(prev)}>prev</button>
-      <button onClick={() => playSong(current)}>play</button>
-      <button onClick={() => playSong(next)}>next</button>
+      <button onClick={() => playPrev(prev.dataset.song)}>prev</button>
+      <button onClick={() => playSong(current.dataset.song)}>play</button>
+      <button onClick={() => playNext(next.dataset.song)}>next</button>
     </PlayerWrapper>
   );
 };
@@ -45,10 +62,10 @@ const mapStateToProps = state => {
   return { state };
 };
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     setSong: src => dispatch(setSong(src))
-//   };
-// };
+const mapDispatchToProps = dispatch => {
+  return {
+    setSongs: elements => dispatch(setSongs(elements))
+  };
+};
 
-export default connect(mapStateToProps)(Player);
+export default connect(mapStateToProps, mapDispatchToProps)(Player);

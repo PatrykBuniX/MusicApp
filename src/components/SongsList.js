@@ -52,12 +52,13 @@ const Album = styled.img`
 
 const SongsList = props => {
   const playSong = async e => {
-    const current = e.target.dataset.song;
-    const prev = e.target.previousElementSibling.dataset.song;
-    const next = e.target.nextElementSibling.dataset.song;
-    if (!current) return;
+    const current = e.target; //.dataset.song;
+    const prev = e.target.previousElementSibling; //.dataset.song;
+    const next = e.target.nextElementSibling; //.dataset.song;
+    const currentSrc = current.dataset.song;
+    if (!currentSrc) return;
     const audio = document.querySelector("audio");
-    audio.src = current;
+    audio.src = currentSrc;
     await audio.play();
     props.setSongs({ prev, current, next });
   };
