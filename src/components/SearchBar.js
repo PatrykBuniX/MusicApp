@@ -8,10 +8,12 @@ const BarWrapper = styled.div`
   height: 10vh;
   position: fixed;
   top: 0;
+  left: 0;
   background: linear-gradient(to right, #20a5c7 0%, #03568a 100%);
   display: flex;
   justify-content: space-around;
   align-items: center;
+  z-index: 1;
 `;
 
 const SearchBar = props => {

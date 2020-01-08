@@ -1,15 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  fetchSongs,
-  handleClick,
-  setSong
-} from "../redux/actions/songsActions";
+import { fetchSongs, setSongs } from "../redux/actions/songsActions";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
   flex: 1 1 auto;
-  margin: 10vh 0;
+  padding: 10vh 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   background: linear-gradient(to right, #bef2fa 0%, #c2d1ff 100%);
@@ -55,17 +51,18 @@ const Album = styled.img`
 `;
 
 const SongsList = props => {
-  const playSong = e => {
-    const src = e.target.dataset.song;
-    if (!src) return;
+  const playSong = async e => {
+    const current = e.target.dataset.song;
+    const prev = e.target.previousElementSibling.dataset.song;
+    const next = e.target.nextElementSibling.dataset.song;
+    if (!current) return;
     const audio = document.querySelector("audio");
-    audio.src = src;
-    audio.play();
-    // props.setSong(src);
+    audio.src = current;
+    await audio.play();
+    props.setSongs({ prev, current, next });
   };
 
   const { songs, lastQuery } = props.state;
-  console.log(songs);
   return (
     <Wrapper>
       {
@@ -109,7 +106,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadMore: query => dispatch(fetchSongs(query)),
-    setSong: src => dispatch(setSong(src))
+    setSongs: src => dispatch(setSongs(src))
   };
 };
 

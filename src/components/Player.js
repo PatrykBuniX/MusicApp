@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-// import { playSong } from "../redux/actions/songsActions";
+// import { setSong } from "../redux/actions/songsActions";
 import styled from "styled-components";
 
 const PlayerWrapper = styled.div`
@@ -15,12 +15,28 @@ const PlayerWrapper = styled.div`
 `;
 
 const Player = props => {
-  const { activeSong } = props.state;
+  const initialThree = {
+    prev: null,
+    current: null,
+    next: null
+  };
+  const { prev, current, next } = props.state.three || initialThree;
+
+  console.log(prev, current, next);
+
+  const playSong = async src => {
+    if (!src) return;
+    const audio = document.querySelector("audio");
+    audio.src = src;
+    await audio.play();
+  };
 
   return (
     <PlayerWrapper>
       <audio src=""></audio>
-      <button onClick={e => props.playSong(e)}>play</button>
+      <button onClick={() => playSong(prev)}>prev</button>
+      <button onClick={() => playSong(current)}>play</button>
+      <button onClick={() => playSong(next)}>next</button>
     </PlayerWrapper>
   );
 };
@@ -28,5 +44,11 @@ const Player = props => {
 const mapStateToProps = state => {
   return { state };
 };
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     setSong: src => dispatch(setSong(src))
+//   };
+// };
 
 export default connect(mapStateToProps)(Player);
