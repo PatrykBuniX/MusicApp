@@ -4,24 +4,26 @@ import { fetchSongs, setSongs } from "../redux/actions/songsActions";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+  margin: 10vh 0;
+  height: 70vh;
+  width: 100vw;
   flex: 1 1 auto;
-  padding: 10vh 0;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
   background: linear-gradient(to right, #bef2fa 0%, #c2d1ff 100%);
 `;
 
 const List = styled.ul`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   list-style-type: none;
+  height: 100%;
+  width: 100%;
 `;
 
 const ListItem = styled.li`
-  margin: 1% 0;
+  margin: 1% auto;
   width: 90%;
-  height: 10vh;
+  max-width: 600px;
+  height: 15%;
   max-height: 80px;
   background: white;
   border: 2px solid black;
@@ -31,10 +33,11 @@ const ListItem = styled.li`
 
 const Button = styled.button`
   display: block;
-  width: 50%;
-  height: 9vh;
-  max-height: 70px;
-  margin: 2% auto;
+  margin: 1vh auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
 `;
 
 const Title = styled.p`
@@ -51,15 +54,15 @@ const Album = styled.img`
 `;
 
 const SongsList = props => {
-  const playSong = async e => {
-    const current = e.target; //.dataset.song;
-    const prev = e.target.previousElementSibling; //.dataset.song;
-    const next = e.target.nextElementSibling; //.dataset.song;
+  const handleClick = e => {
+    const current = e.target;
+    const prev = e.target.previousElementSibling;
+    const next = e.target.nextElementSibling;
     const currentSrc = current.dataset.song;
     if (!currentSrc) return;
     const audio = document.querySelector("audio");
     audio.src = currentSrc;
-    await audio.play();
+    audio.play();
     props.setSongs({ prev, current, next });
   };
 
@@ -73,7 +76,7 @@ const SongsList = props => {
               return (
                 <ListItem
                   data-song={song.preview}
-                  onClick={e => playSong(e)}
+                  onClick={e => handleClick(e)}
                   key={i}
                 >
                   <div>

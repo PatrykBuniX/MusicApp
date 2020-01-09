@@ -18,6 +18,7 @@ const AppWrapper = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 const App = () => {

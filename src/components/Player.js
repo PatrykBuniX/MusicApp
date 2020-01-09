@@ -24,11 +24,11 @@ const Player = props => {
 
   console.log(prev, current, next);
 
-  const playSong = async src => {
+  const playSong = src => {
     if (!src) return;
     const audio = document.querySelector("audio");
     audio.src = src;
-    await audio.play();
+    audio.play();
   };
 
   const playPrev = src => {
