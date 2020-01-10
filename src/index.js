@@ -7,9 +7,9 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import songsReducer from "./redux/reducers/songsReducer";
+import rootReducer from "./redux/reducers/rootReducer";
 
-const store = createStore(songsReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>

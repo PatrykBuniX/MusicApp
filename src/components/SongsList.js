@@ -54,19 +54,23 @@ const Album = styled.img`
 `;
 
 const SongsList = props => {
+  const playSong = src => {
+    if (!src) return;
+    const audio = document.querySelector("audio");
+    audio.src = src;
+    audio.play();
+  };
+
   const handleClick = e => {
     const current = e.target;
     const prev = e.target.previousElementSibling;
     const next = e.target.nextElementSibling;
     const currentSrc = current.dataset.song;
-    if (!currentSrc) return;
-    const audio = document.querySelector("audio");
-    audio.src = currentSrc;
-    audio.play();
+    playSong(currentSrc);
     props.setSongs({ prev, current, next });
   };
 
-  const { songs, lastQuery } = props.state;
+  const { songs, lastQuery } = props.state.songs;
   return (
     <Wrapper>
       {

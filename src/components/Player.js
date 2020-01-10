@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { setSongs } from "../redux/actions/songsActions";
 import styled from "styled-components";
@@ -20,15 +20,45 @@ const Player = props => {
     current: null,
     next: null
   };
+
+  const [playing, setPlaying] = useState(false);
+
+  // const [order, setOrder] = useState({
+  //   prev: null,
+  //   current: null,
+  //   next: null
+  // })
+
   const { prev, current, next } = props.state.elements || initElements;
 
   console.log(prev, current, next);
 
-  const playSong = src => {
+  // const audio = document.querySelector("audio");
+  let audio;
+
+  // useEffect(() => {
+  //   loadSong(order.current)
+  // })
+
+  const loadSong = src => {
     if (!src) return;
-    const audio = document.querySelector("audio");
     audio.src = src;
-    audio.play();
+    // audio.addEventListener("ended", () => {
+    //   setPlaying(false);
+    //   return audio.removeEventListener("ended", () => {
+    //     setPlaying(false);
+    //   });
+    // });
+  };
+
+  const togglePlay = () => {
+    if (playing) {
+      audio.pause();
+      setPlaying(false);
+    } else {
+      audio.start();
+      setPlaying(true);
+    }
   };
 
   const playPrev = src => {
@@ -37,7 +67,7 @@ const Player = props => {
       current: prev,
       next: current
     });
-    playSong(src);
+    loadSong(src);
   };
   const playNext = src => {
     props.setSongs({
@@ -45,14 +75,16 @@ const Player = props => {
       current: next,
       next: next.nextElementSibling
     });
-    playSong(src);
+    loadSong(src);
   };
 
   return (
     <PlayerWrapper>
-      <audio src=""></audio>
+      <audio ref={ref => (audio = ref)} src=""></audio>
       <button onClick={() => playPrev(prev.dataset.song)}>prev</button>
-      <button onClick={() => playSong(current.dataset.song)}>play</button>
+      <button onClick={() => togglePlay(current.dataset.song)}>
+        {!playing ? "play" : "pause"}
+      </button>
       <button onClick={() => playNext(next.dataset.song)}>next</button>
     </PlayerWrapper>
   );
