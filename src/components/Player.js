@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { setSongs } from "../redux/actions/songsActions";
+import { setOrder } from "../redux/actions/playerActions";
 import styled from "styled-components";
 
 const PlayerWrapper = styled.div`
@@ -15,76 +15,54 @@ const PlayerWrapper = styled.div`
 `;
 
 const Player = props => {
-  const initElements = {
-    prev: null,
-    current: null,
-    next: null
-  };
+  const [isPlaying, setPlaying] = useState(false);
+  const [currSong, setCurrSong] = useState(null);
 
-  const [playing, setPlaying] = useState(false);
+  const { prev, current, next } = props.state.player;
 
-  // const [order, setOrder] = useState({
-  //   prev: null,
-  //   current: null,
-  //   next: null
-  // })
-
-  const { prev, current, next } = props.state.elements || initElements;
-
-  console.log(prev, current, next);
-
-  // const audio = document.querySelector("audio");
   let audio;
 
-  // useEffect(() => {
-  //   loadSong(order.current)
-  // })
-
-  const loadSong = src => {
-    if (!src) return;
-    audio.src = src;
-    // audio.addEventListener("ended", () => {
-    //   setPlaying(false);
-    //   return audio.removeEventListener("ended", () => {
-    //     setPlaying(false);
-    //   });
-    // });
-  };
+  useEffect(() => {
+    if (!isPlaying) return;
+    audio.play();
+  });
 
   const togglePlay = () => {
-    if (playing) {
+    if (isPlaying) {
+      console.log("will stop");
       audio.pause();
       setPlaying(false);
     } else {
-      audio.start();
+      console.log("will play");
+      audio.play();
       setPlaying(true);
     }
+    console.log(isPlaying);
   };
 
   const playPrev = src => {
-    props.setSongs({
+    props.setOrder({
       prev: prev.previousElementSibling,
       current: prev,
       next: current
     });
-    loadSong(src);
   };
   const playNext = src => {
-    props.setSongs({
+    props.setOrder({
       prev: current,
       current: next,
       next: next.nextElementSibling
     });
-    loadSong(src);
   };
 
   return (
     <PlayerWrapper>
-      <audio ref={ref => (audio = ref)} src=""></audio>
+      <audio
+        ref={ref => (audio = ref)}
+        src={current && current.dataset.song}
+      ></audio>
       <button onClick={() => playPrev(prev.dataset.song)}>prev</button>
-      <button onClick={() => togglePlay(current.dataset.song)}>
-        {!playing ? "play" : "pause"}
-      </button>
+      <button onClick={togglePlay}>{!isPlaying ? "play" : "pause"}</button>
       <button onClick={() => playNext(next.dataset.song)}>next</button>
     </PlayerWrapper>
   );
@@ -96,7 +74,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setSongs: elements => dispatch(setSongs(elements))
+    setOrder: elements => dispatch(setOrder(elements))
   };
 };
 

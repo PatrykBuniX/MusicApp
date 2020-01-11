@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchSongs, setSongs } from "../redux/actions/songsActions";
+import { fetchSongs } from "../redux/actions/songsActions";
+import { setOrder } from "../redux/actions/playerActions";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -54,20 +55,18 @@ const Album = styled.img`
 `;
 
 const SongsList = props => {
-  const playSong = src => {
-    if (!src) return;
-    const audio = document.querySelector("audio");
-    audio.src = src;
-    audio.play();
-  };
+  // const playSong = src => {
+  //   if (!src) return;
+  //   const audio = document.querySelector("audio");
+  //   audio.src = src;
+  //   audio.play();
+  // };
 
   const handleClick = e => {
     const current = e.target;
     const prev = e.target.previousElementSibling;
     const next = e.target.nextElementSibling;
-    const currentSrc = current.dataset.song;
-    playSong(currentSrc);
-    props.setSongs({ prev, current, next });
+    props.setOrder({ prev, current, next });
   };
 
   const { songs, lastQuery } = props.state.songs;
@@ -114,7 +113,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadMore: query => dispatch(fetchSongs(query)),
-    setSongs: src => dispatch(setSongs(src))
+    setOrder: src => dispatch(setOrder(src))
   };
 };
 
