@@ -55,13 +55,6 @@ const Album = styled.img`
 `;
 
 const SongsList = props => {
-  // const playSong = src => {
-  //   if (!src) return;
-  //   const audio = document.querySelector("audio");
-  //   audio.src = src;
-  //   audio.play();
-  // };
-
   const handleClick = e => {
     const current = e.target;
     const prev = e.target.previousElementSibling;

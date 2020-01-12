@@ -16,10 +16,8 @@ const PlayerWrapper = styled.div`
 
 const Player = props => {
   const [isPlaying, setPlaying] = useState(false);
-  const [currSong, setCurrSong] = useState(null);
 
   const { prev, current, next } = props.state.player;
-
   let audio;
 
   useEffect(() => {
@@ -29,11 +27,9 @@ const Player = props => {
 
   const togglePlay = () => {
     if (isPlaying) {
-      console.log("will stop");
       audio.pause();
       setPlaying(false);
     } else {
-      console.log("will play");
       audio.play();
       setPlaying(true);
     }
