@@ -63,6 +63,7 @@ const SongsList = props => {
   };
 
   const { songs, lastQuery } = props.state.songs;
+
   return (
     <Wrapper>
       {
