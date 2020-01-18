@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchSongs } from "../redux/actions/songsActions";
-import { setOrder } from "../redux/actions/playerActions";
+import { setOrder, togglePlay } from "../redux/actions/playerActions";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -60,6 +60,7 @@ const SongsList = props => {
     const prev = e.target.previousElementSibling;
     const next = e.target.nextElementSibling;
     props.setOrder({ prev, current, next });
+    props.togglePlay(true);
   };
 
   const { songs, lastQuery } = props.state.songs;
@@ -107,7 +108,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadMore: query => dispatch(fetchSongs(query)),
-    setOrder: src => dispatch(setOrder(src))
+    setOrder: src => dispatch(setOrder(src)),
+    togglePlay: src => dispatch(togglePlay(src))
   };
 };
 
