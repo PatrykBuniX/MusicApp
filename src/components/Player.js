@@ -50,6 +50,7 @@ const Player = props => {
   return (
     <PlayerWrapper>
       <audio
+        onEnded={playNext}
         ref={ref => (audio = ref)}
         src={playlist[trackIndex] && playlist[trackIndex].preview}
       ></audio>
