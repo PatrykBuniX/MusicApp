@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchSongs } from "../redux/actions/songsActions";
-import { setOrder, togglePlay } from "../redux/actions/playerActions";
+import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -56,10 +56,8 @@ const Album = styled.img`
 
 const SongsList = props => {
   const handleClick = e => {
-    const current = e.target;
-    const prev = e.target.previousElementSibling;
-    const next = e.target.nextElementSibling;
-    props.setOrder({ prev, current, next });
+    const { index } = e.target.dataset;
+    props.setTrackIndex(Number(index));
     props.togglePlay(true);
   };
 
@@ -74,6 +72,7 @@ const SongsList = props => {
               return (
                 <ListItem
                   data-song={song.preview}
+                  data-index={i}
                   onClick={e => handleClick(e)}
                   key={i}
                 >
@@ -108,8 +107,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadMore: query => dispatch(fetchSongs(query)),
-    setOrder: src => dispatch(setOrder(src)),
-    togglePlay: src => dispatch(togglePlay(src))
+    setTrackIndex: src => dispatch(setTrackIndex(src)),
+    togglePlay: isPlaying => dispatch(togglePlay(isPlaying))
   };
 };
 

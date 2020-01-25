@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { setOrder, togglePlay } from "../redux/actions/playerActions";
+import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import styled from "styled-components";
 
 const PlayerWrapper = styled.div`
@@ -15,17 +15,13 @@ const PlayerWrapper = styled.div`
 `;
 
 const Player = props => {
-  const { prev, current, next } = props.state.player.elements;
+  const { songs: playlist } = props.state.songs;
+  const { trackIndex } = props.state.player;
   const { isPlaying: playing } = props.state.player;
 
   let audio;
 
   useEffect(() => {
-    audio.addEventListener("ended", () => console.log("end"));
-  }, []);
-
-  useEffect(() => {
-    console.log("use effect!");
     if (!playing) return;
     audio.play();
   });
@@ -42,29 +38,24 @@ const Player = props => {
   };
 
   const playPrev = () => {
-    props.setOrder({
-      prev: prev.previousElementSibling,
-      current: prev,
-      next: current
-    });
+    const newIndex = trackIndex > 0 ? trackIndex - 1 : 0;
+    props.setTrackIndex(newIndex);
   };
   const playNext = () => {
-    props.setOrder({
-      prev: current,
-      current: next,
-      next: next.nextElementSibling
-    });
+    const lastIndex = playlist.length - 1;
+    const newIndex = trackIndex < lastIndex ? trackIndex + 1 : lastIndex;
+    props.setTrackIndex(newIndex);
   };
 
   return (
     <PlayerWrapper>
       <audio
         ref={ref => (audio = ref)}
-        src={current && current.dataset.song}
+        src={playlist[trackIndex] && playlist[trackIndex].preview}
       ></audio>
-      <button onClick={() => playPrev(prev.dataset.song)}>prev</button>
+      <button onClick={playPrev}>prev</button>
       <button onClick={handleClick}>{!playing ? "play" : "pause"}</button>
-      <button onClick={() => playNext(next.dataset.song)}>next</button>
+      <button onClick={playNext}>next</button>
     </PlayerWrapper>
   );
 };
@@ -75,8 +66,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setOrder: elements => dispatch(setOrder(elements)),
-    togglePlay: elements => dispatch(togglePlay(elements))
+    setTrackIndex: elements => dispatch(setTrackIndex(elements)),
+    togglePlay: isPlaying => dispatch(togglePlay(isPlaying))
   };
 };
 

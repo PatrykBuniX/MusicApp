@@ -1,15 +1,15 @@
 const initState = {
-  elements: { prev: null, current: null, next: null },
+  trackIndex: 0,
   isPlaying: false
 };
 
 const playerReducer = (state = initState, action) => {
   switch (action.type) {
-    case "SET_ORDER":
-      console.log("set order:", action.elements);
+    case "SET_TRACK_INDEX":
+      console.log("set order:", action.index);
       return {
         ...state,
-        elements: action.elements
+        trackIndex: action.index
       };
     case "TOGGLE_PLAY":
       console.log("toggle play:", action.isPlaying);

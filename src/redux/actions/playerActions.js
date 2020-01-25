@@ -1,6 +1,6 @@
-export const setOrder = elements => {
+export const setTrackIndex = index => {
   return dispatch => {
-    dispatch({ type: "SET_ORDER", elements });
+    dispatch({ type: "SET_TRACK_INDEX", index });
   };
 };
 
