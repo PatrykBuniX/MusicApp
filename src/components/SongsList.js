@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchSongs } from "../redux/actions/songsActions";
+import { fetchMoreSongs } from "../redux/actions/songsActions";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import styled from "styled-components";
 
@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   height: 70vh;
   width: 100vw;
   flex: 1 1 auto;
+  position: relative;
   background: linear-gradient(to right, #bef2fa 0%, #c2d1ff 100%);
 `;
 
@@ -35,9 +36,9 @@ const ListItem = styled.li`
 const Button = styled.button`
   display: block;
   margin: 1vh auto;
-  position: fixed;
-  top: 0;
+  position: absolute;
   left: 0;
+  right: 0;
   z-index: 1;
 `;
 
@@ -70,12 +71,7 @@ const SongsList = props => {
           {songs &&
             songs.map((song, i) => {
               return (
-                <ListItem
-                  data-song={song.preview}
-                  data-index={i}
-                  onClick={e => handleClick(e)}
-                  key={i}
-                >
+                <ListItem data-index={i} onClick={e => handleClick(e)} key={i}>
                   <div>
                     <Title>{song.title_short}</Title>
                     <Artist>{song.artist.name}</Artist>
@@ -106,7 +102,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadMore: query => dispatch(fetchSongs(query)),
+    loadMore: query => dispatch(fetchMoreSongs(query)),
     setTrackIndex: src => dispatch(setTrackIndex(src)),
     togglePlay: isPlaying => dispatch(togglePlay(isPlaying))
   };

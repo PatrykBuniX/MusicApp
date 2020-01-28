@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { fetchSongs } from "../redux/actions/songsActions";
+import { fetchSongs, fetchMoreSongs } from "../redux/actions/songsActions";
+import { setTrackIndex } from "../redux/actions/playerActions";
 import styled from "styled-components";
 
 const BarWrapper = styled.div`
@@ -19,7 +20,12 @@ const SearchBar = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.getSongs(search);
+    if (search === props.lastQuery) {
+      props.getMoreSongs(search);
+    } else {
+      props.setTrackIndex(0);
+      props.getSongs(search);
+    }
     e.target.reset();
     setSearch("");
   };
@@ -28,7 +34,12 @@ const SearchBar = props => {
   };
   return (
     <BarWrapper>
-      <p>MusicApp</p>
+      <p>
+        <span role="img" aria-label="music note">
+          🎵
+        </span>{" "}
+        MusicApp
+      </p>
       <form onSubmit={handleSubmit}>
         <input onChange={handleChange} type="text" />
         <button type="submit">search</button>
@@ -36,10 +47,16 @@ const SearchBar = props => {
     </BarWrapper>
   );
 };
+const mapStateToProps = state => {
+  return { lastQuery: state.songs.lastQuery };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
-    getSongs: query => dispatch(fetchSongs(query))
+    getSongs: query => dispatch(fetchSongs(query)),
+    getMoreSongs: query => dispatch(fetchMoreSongs(query)),
+    setTrackIndex: index => dispatch(setTrackIndex(index))
   };
 };
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

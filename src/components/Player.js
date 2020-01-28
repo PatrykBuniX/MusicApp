@@ -34,7 +34,6 @@ const Player = props => {
       audio.play();
       props.togglePlay(true);
     }
-    console.log(playing);
   };
 
   const playPrev = () => {
