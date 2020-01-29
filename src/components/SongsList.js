@@ -55,6 +55,11 @@ const Album = styled.img`
   border-left: 2px solid black;
 `;
 
+const Canvas = styled.canvas`
+  width: 100%;
+  height: 100%;
+`
+
 const SongsList = props => {
   const handleClick = e => {
     const { index } = e.target.dataset;
@@ -66,6 +71,7 @@ const SongsList = props => {
 
   return (
     <Wrapper>
+        <Canvas></Canvas>
       {
         <List>
           {songs &&
