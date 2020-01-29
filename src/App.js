@@ -22,6 +22,7 @@ const AppWrapper = styled.div`
 `;
 
 const App = () => {
+  window.addEventListener("click", e => console.log(e));
   return (
     <AppWrapper id="mainwrapper">
       <GlobalStyle />

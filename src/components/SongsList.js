@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   width: 100vw;
   flex: 1 1 auto;
   position: relative;
-  background: linear-gradient(to right, #bef2fa 0%, #c2d1ff 100%);
+  background: linear-gradient(to bottom, #18829c 0%, #0569ac 100%);
 `;
 
 const List = styled.ul`
@@ -27,7 +27,7 @@ const ListItem = styled.li`
   max-width: 600px;
   height: 15%;
   max-height: 80px;
-  background: white;
+  background: hsla(244, 0%, 100%, 0.25);
   border: 2px solid black;
   display: flex;
   justify-content: space-between;
@@ -55,11 +55,6 @@ const Album = styled.img`
   border-left: 2px solid black;
 `;
 
-const Canvas = styled.canvas`
-  width: 100%;
-  height: 100%;
-`
-
 const SongsList = props => {
   const handleClick = e => {
     const { index } = e.target.dataset;
@@ -71,7 +66,6 @@ const SongsList = props => {
 
   return (
     <Wrapper>
-        <Canvas></Canvas>
       {
         <List>
           {songs &&
