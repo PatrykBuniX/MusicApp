@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import styled from "styled-components";
@@ -54,6 +54,7 @@ const Player = props => {
   async function getAudio() {
     if (!audio) return;
     audio.play();
+    if (!audio.captureStream) return;
     const stream = audio.captureStream();
 
     const audioCtx = new AudioContext();
