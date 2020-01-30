@@ -56,10 +56,10 @@ const Player = props => {
     audio.play();
     if (!audio.captureStream) return;
     const stream = audio.captureStream();
-
-    const audioCtx = new AudioContext();
-    analyzer = audioCtx.createAnalyser();
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const source = audioCtx.createMediaStreamSource(stream);
+
+    analyzer = audioCtx.createAnalyser();
     source.connect(analyzer);
 
     analyzer.fftSize = 2 ** 8;

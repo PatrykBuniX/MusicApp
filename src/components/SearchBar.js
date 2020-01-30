@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { fetchSongs, fetchMoreSongs } from "../redux/actions/songsActions";
-import { setTrackIndex } from "../redux/actions/playerActions";
+import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import styled from "styled-components";
 
 const BarWrapper = styled.div`
@@ -24,6 +24,7 @@ const SearchBar = props => {
       props.getMoreSongs(search);
     } else {
       props.setTrackIndex(0);
+      props.togglePlay(false);
       props.getSongs(search);
     }
     e.target.reset();
@@ -55,7 +56,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getSongs: query => dispatch(fetchSongs(query)),
     getMoreSongs: query => dispatch(fetchMoreSongs(query)),
-    setTrackIndex: index => dispatch(setTrackIndex(index))
+    setTrackIndex: index => dispatch(setTrackIndex(index)),
+    togglePlay: index => dispatch(togglePlay(index))
   };
 };
 
