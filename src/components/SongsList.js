@@ -19,35 +19,38 @@ const List = styled.ul`
   list-style-type: none;
   height: 100%;
   width: 100%;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ListItem = styled.li`
   margin: 1% auto;
   width: 90%;
-  max-width: 600px;
+  max-width: 500px;
   height: 15%;
-  max-height: 80px;
+  max-height: 70px;
   background: hsla(244, 0%, 100%, 0.25);
-  border: 2px solid black;
+  border-bottom: 4px solid black;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 `;
 
 const Button = styled.button`
   display: block;
-  margin: 1vh auto;
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: none;
+  cursor: pointer;
+  border: none;
 `;
 
 const Title = styled.p`
-  font-size: 0.9em;
+  font-size: 1.1em;
 `;
 const Artist = styled.p`
-  font-size: 0.8em;
-  color: grey;
+  font-size: 0.9em;
 `;
 
 const Album = styled.img`
@@ -55,8 +58,15 @@ const Album = styled.img`
   border-left: 2px solid black;
 `;
 
+const Link = styled.a`
+  color: blue;
+  text-decoration: none;
+`;
+
 const SongsList = props => {
   const handleClick = e => {
+    console.dir(e.target);
+    if (e.target.tagName === "A") return;
     const { index } = e.target.dataset;
     props.setTrackIndex(Number(index));
     props.togglePlay(true);
@@ -75,23 +85,27 @@ const SongsList = props => {
                   <div>
                     <Title>{song.title_short}</Title>
                     <Artist>{song.artist.name}</Artist>
-                    <a
+                    <Link
                       rel="noopener noreferrer"
                       target="_blank"
                       href={song.preview}
                     >
                       link
-                    </a>
+                    </Link>
                   </div>
                   <Album alt="album" src={song.album.cover} />
                 </ListItem>
               );
             })}
+          {songs.length >= 1 && (
+            <ListItem>
+              <Button onClick={() => props.loadMore(lastQuery)}>
+                load more...
+              </Button>
+            </ListItem>
+          )}
         </List>
       }
-      {songs.length >= 1 && (
-        <Button onClick={() => props.loadMore(lastQuery)}>load more...</Button>
-      )}
     </Wrapper>
   );
 };

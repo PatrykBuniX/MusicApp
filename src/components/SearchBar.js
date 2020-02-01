@@ -9,10 +9,64 @@ const BarWrapper = styled.div`
   height: 10vh;
   background: #18829c;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   position: fixed;
   top: 0;
+  font-size: 1rem;
+
+  /* @media (min-width: 768px) {
+    justify-content: flex-start;
+  } */
+`;
+
+const Logo = styled.p`
+  flex: 1;
+  max-width: 250px;
+  display: flex;
+  justify-content: center;
+  font-size: 1em;
+  font-weight: bold;
+`;
+
+const Form = styled.form`
+  flex: 1;
+  max-width: 250px;
+  display: flex;
+  justify-content: center;
+`;
+
+const Input = styled.input`
+  width: 80%;
+  background: none;
+  border: none;
+  border-bottom: 2px solid #0569ac;
+  outline: none;
+  transform-origin: right;
+  transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
+
+  &:hover {
+    transform: scale(1.2);
+  }
+  &:focus {
+    transform: scale(1.2);
+  }
+`;
+const Button = styled.button`
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1em;
+  margin-left: 5%;
+  transition: transform 0.2s ease-in-out;
+  outline: none;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:focus {
+    transform: scale(1.1);
+  }
 `;
 
 const SearchBar = props => {
@@ -35,16 +89,20 @@ const SearchBar = props => {
   };
   return (
     <BarWrapper>
-      <p>
+      <Logo>
         <span role="img" aria-label="music note">
           🎵
         </span>{" "}
         MusicApp
-      </p>
-      <form onSubmit={handleSubmit}>
-        <input onChange={handleChange} type="text" />
-        <button type="submit">search</button>
-      </form>
+      </Logo>
+      <Form onSubmit={handleSubmit}>
+        <Input onChange={handleChange} type="text" />
+        <Button type="submit">
+          <span role="img" aria-label="magnify">
+            🔍
+          </span>
+        </Button>
+      </Form>
     </BarWrapper>
   );
 };

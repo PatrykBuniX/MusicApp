@@ -8,7 +8,7 @@ const PlayerWrapper = styled.div`
   height: 10vh;
   background: #0569ac;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   position: fixed;
   bottom: 0;
@@ -21,6 +21,30 @@ const Canvas = styled.canvas`
   z-index: -1;
   top: 0;
   left: 0;
+`;
+
+const Button = styled.button`
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 2em;
+  transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
+  outline: none;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:focus {
+    transform: scale(1.1);
+  }
+
+  &:nth-of-type(2) {
+    margin: 0 10%;
+
+    @media (min-width: 768px) {
+      margin: 0 5%;
+    }
+  }
 `;
 
 const Player = props => {
@@ -37,7 +61,9 @@ const Player = props => {
   let bufferLength;
 
   const handleClick = () => {
+    if (!audio.current.src) return;
     if (isPlaying) {
+      console.dir(audio.current);
       props.togglePlay(false);
     } else {
       props.togglePlay(true);
@@ -115,9 +141,27 @@ const Player = props => {
         src={playlist[trackIndex] && playlist[trackIndex].preview}
       ></audio>
       <Canvas ref={canvas}></Canvas>
-      <button onClick={playPrev}>prev</button>
-      <button onClick={handleClick}>{!isPlaying ? "play" : "pause"}</button>
-      <button onClick={playNext}>next</button>
+      <Button onClick={playPrev}>
+        <span role="img" aria-label="previous">
+          ⏮
+        </span>
+      </Button>
+      <Button onClick={handleClick}>
+        {!isPlaying ? (
+          <span role="img" aria-label="music note">
+            🎵
+          </span>
+        ) : (
+          <span role="img" aria-label="pause">
+            ⏸
+          </span>
+        )}
+      </Button>
+      <Button onClick={playNext}>
+        <span role="img" aria-label="next">
+          ⏭
+        </span>
+      </Button>
     </PlayerWrapper>
   );
 };
