@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
-//import other components:
 import SearchBar from "./components/SearchBar";
 import SongsList from "./components/SongsList";
 import Player from "./components/Player";
@@ -22,9 +21,8 @@ const AppWrapper = styled.div`
 `;
 
 const App = () => {
-  window.addEventListener("click", e => console.log(e));
   return (
-    <AppWrapper id="mainwrapper">
+    <AppWrapper>
       <GlobalStyle />
       <SearchBar />
       <SongsList />

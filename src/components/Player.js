@@ -17,45 +17,51 @@ const PlayerWrapper = styled.div`
 const Canvas = styled.canvas`
   width: 100%;
   height: 100%;
-  z-index: -1;
   position: absolute;
+  z-index: -1;
   top: 0;
   left: 0;
 `;
 
 const Player = props => {
   const { songs: playlist } = props.state.songs;
-  const { trackIndex } = props.state.player;
-  const { isPlaying: playing } = props.state.player;
+  const { isPlaying, trackIndex } = props.state.player;
 
-  let audio;
-  let canvas;
+  const audio = useRef(null);
+  const canvas = useRef(null);
+  const ctx = useRef(null);
 
-  let ctx;
-
-  const WIDTH = window.innerWidth;
-  const HEIGHT = window.innerHeight;
+  const WIDTH = 1000;
+  const HEIGHT = 1000;
   let analyzer;
   let bufferLength;
+
+  const handleClick = () => {
+    if (isPlaying) {
+      props.togglePlay(false);
+    } else {
+      props.togglePlay(true);
+    }
+  };
+
+  //check the isPlaying flag and play/pause audio
   useEffect(() => {
-    if (!playing) return;
-    audio.load();
-    audio.addEventListener("canplaythrough", () => {
-      getAudio();
-    });
+    if (!isPlaying) {
+      audio.current.pause();
+    } else {
+      audio.current.play();
+    }
   });
 
   useEffect(() => {
-    canvas.width = WIDTH;
-    canvas.height = HEIGHT;
-    ctx = canvas.getContext("2d");
-  });
+    ctx.current = canvas.current.getContext("2d");
+    canvas.current.width = WIDTH;
+    canvas.current.height = HEIGHT;
+  }, [WIDTH, HEIGHT]);
 
-  async function getAudio() {
-    if (!audio) return;
-    audio.play();
-    if (!audio.captureStream) return;
-    const stream = audio.captureStream();
+  const getAudio = async () => {
+    if (!audio.current.captureStream) return;
+    const stream = audio.current.captureStream();
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const source = audioCtx.createMediaStreamSource(stream);
 
@@ -67,10 +73,10 @@ const Player = props => {
     bufferLength = analyzer.frequencyBinCount;
     const frequencyData = new Uint8Array(bufferLength);
     drawFrequency(frequencyData);
-  }
+  };
 
-  function drawFrequency(frequencyData) {
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+  const drawFrequency = frequencyData => {
+    ctx.current.clearRect(0, 0, WIDTH, HEIGHT);
 
     analyzer.getByteFrequencyData(frequencyData);
 
@@ -81,22 +87,12 @@ const Player = props => {
       const percent = amount / 255;
       const barHeight = HEIGHT * percent;
 
-      ctx.fillStyle = `hsla(204, 96%, 49%, ${percent})`;
-      ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+      ctx.current.fillStyle = `hsla(204, 96%, 49%, ${percent})`;
+      ctx.current.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
       x += barWidth;
     });
 
     requestAnimationFrame(() => drawFrequency(frequencyData));
-  }
-
-  const handleClick = () => {
-    if (playing) {
-      audio.pause();
-      props.togglePlay(false);
-    } else {
-      audio.play();
-      props.togglePlay(true);
-    }
   };
 
   const playPrev = () => {
@@ -112,14 +108,15 @@ const Player = props => {
   return (
     <PlayerWrapper>
       <audio
+        onCanPlayThrough={getAudio}
         crossOrigin="anonymous"
         onEnded={playNext}
-        ref={ref => (audio = ref)}
+        ref={audio}
         src={playlist[trackIndex] && playlist[trackIndex].preview}
       ></audio>
-      <Canvas ref={ref => (canvas = ref)}></Canvas>
+      <Canvas ref={canvas}></Canvas>
       <button onClick={playPrev}>prev</button>
-      <button onClick={handleClick}>{!playing ? "play" : "pause"}</button>
+      <button onClick={handleClick}>{!isPlaying ? "play" : "pause"}</button>
       <button onClick={playNext}>next</button>
     </PlayerWrapper>
   );
