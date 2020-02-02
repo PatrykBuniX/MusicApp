@@ -13,6 +13,7 @@ const PlayerWrapper = styled.div`
   align-items: center;
   position: fixed;
   bottom: 0;
+  padding: 1% 0;
 `;
 
 const Canvas = styled.canvas`
@@ -30,6 +31,7 @@ const ProgressBar = styled.div`
   border-radius: 50px;
   background: hsla(244, 0%, 100%, 0.5);
   width: 80%;
+  max-width: 700px;
   display: flex;
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
@@ -41,12 +43,12 @@ const ProgressBar = styled.div`
 const Progress = styled.div`
   border-radius: 50px;
   background: #044b7a;
-  flex-basis: 0%;
+  flex-basis: 50%;
 `;
 
 const Buttons = styled.div`
   display: flex;
-  margin: 1% 0;
+  font-size: 1.25em;
 `;
 
 const Button = styled.button`
@@ -78,8 +80,25 @@ const CurrentTrack = styled.p`
   font-size: 1em;
 `;
 
-const Volume = styled.input`
-  /* flex: 1; */
+const VolumeBar = styled.div`
+  height: 5%;
+  min-height: 5px;
+  border-radius: 50px;
+  background: hsla(244, 0%, 100%, 0.5);
+  width: 60%;
+  max-width: 400px;
+  display: flex;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+const Volume = styled.div`
+  border-radius: 50px;
+  background: #044b7a;
+  flex-basis: 50%;
 `;
 
 const Player = props => {
@@ -91,6 +110,8 @@ const Player = props => {
   const ctx = useRef(null);
   const progressRef = useRef(null);
   const progressBarRef = useRef(null);
+  const volumeRef = useRef(null);
+  const volumeBarRef = useRef(null);
 
   const WIDTH = 1000;
   const HEIGHT = 1000;
@@ -105,6 +126,10 @@ const Player = props => {
       props.togglePlay(true);
     }
   };
+
+  useEffect(() => {
+    audio.current.volume = 0.5;
+  }, []);
 
   //check the isPlaying flag and play/pause audio
   useEffect(() => {
@@ -121,7 +146,7 @@ const Player = props => {
     canvas.current.height = HEIGHT;
   }, [WIDTH, HEIGHT]);
 
-  const getAudio = async () => {
+  const getAudioData = async () => {
     if (!audio.current.captureStream) return;
     const stream = audio.current.captureStream();
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -176,16 +201,25 @@ const Player = props => {
   const handleProgressChange = e => {
     e.persist();
     if (!audio.current.currentTime) return;
-    const width = progressBarRef.current.offsetWidth;
-    const percent = (e.pageX - progressBarRef.current.offsetLeft) / width;
+    const { width, left } = progressBarRef.current.getBoundingClientRect();
+    const percent = (e.pageX - left) / width;
     audio.current.currentTime = percent * audio.current.duration;
+  };
+
+  const handleVolumeChange = e => {
+    e.persist();
+    const { width, left } = volumeBarRef.current.getBoundingClientRect();
+    const percent = (e.pageX - left) / width;
+    console.log(percent);
+    audio.current.volume = percent;
+    volumeRef.current.style.flexBasis = `${percent * 100}%`;
   };
 
   return (
     <PlayerWrapper>
       <audio
         onTimeUpdate={handleProgress}
-        onCanPlayThrough={getAudio}
+        onCanPlayThrough={getAudioData}
         crossOrigin="anonymous"
         onEnded={playNext}
         ref={audio}
@@ -207,7 +241,9 @@ const Player = props => {
         </Button>
         <Button onClick={playNext}>next</Button>
       </Buttons>
-      <Volume type="range" />
+      <VolumeBar ref={volumeBarRef} onClick={handleVolumeChange}>
+        <Volume ref={volumeRef}></Volume>
+      </VolumeBar>
     </PlayerWrapper>
   );
 };

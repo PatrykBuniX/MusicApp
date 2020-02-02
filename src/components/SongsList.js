@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchMoreSongs } from "../redux/actions/songsActions";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
@@ -30,12 +30,13 @@ const ListItem = styled.li`
   max-width: 500px;
   height: 15%;
   max-height: 70px;
-  background: hsla(244, 0%, 100%, 0.25);
+  background: hsla(0, 0%, 100%, 0.25);
   border-bottom: 4px solid black;
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
+  transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95),
+    background 0.2s ease-in-out;
 
   &:hover {
     transform: scale(1.05);
@@ -79,6 +80,12 @@ const SongsList = props => {
 
   const { songs, lastQuery } = props.state.songs;
 
+  const checkActive = index => {
+    return Number(index) === props.state.player.trackIndex
+      ? { background: "hsla(0, 100%, 100%, 0.5)", transform: "scale(1.05)" }
+      : null;
+  };
+
   return (
     <Wrapper>
       {
@@ -86,7 +93,12 @@ const SongsList = props => {
           {songs &&
             songs.map((song, i) => {
               return (
-                <ListItem data-index={i} onClick={e => handleClick(e)} key={i}>
+                <ListItem
+                  style={checkActive(i)}
+                  data-index={i}
+                  onClick={e => handleClick(e)}
+                  key={i}
+                >
                   <div>
                     <Title>{song.title_short}</Title>
                     <Artist>{song.artist.name}</Artist>
