@@ -5,7 +5,7 @@ import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  margin: 10vh 0;
+  margin: 10vh 0 20vh 0;
   height: 70vh;
   width: 100vw;
   flex: 1 1 auto;
@@ -35,6 +35,11 @@ const ListItem = styled.li`
   display: flex;
   justify-content: space-between;
   cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 const Button = styled.button`

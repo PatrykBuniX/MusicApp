@@ -46,10 +46,10 @@ const Input = styled.input`
   transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
 
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
   }
   &:focus {
-    transform: scale(1.2);
+    transform: scale(1.1);
   }
 `;
 const Button = styled.button`
@@ -58,7 +58,7 @@ const Button = styled.button`
   border: none;
   font-size: 1em;
   margin-left: 5%;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
   outline: none;
 
   &:hover {
