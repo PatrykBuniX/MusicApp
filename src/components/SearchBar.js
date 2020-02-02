@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchSongs, fetchMoreSongs } from "../redux/actions/songsActions";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import styled from "styled-components";
+import { FaMusic, FaSistrix } from "react-icons/fa";
 
 const BarWrapper = styled.div`
   width: 100%;
@@ -56,7 +57,7 @@ const Button = styled.button`
   cursor: pointer;
   background: none;
   border: none;
-  font-size: 1em;
+  font-size: 1.25em;
   margin-left: 5%;
   transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
   outline: none;
@@ -90,17 +91,13 @@ const SearchBar = props => {
   return (
     <BarWrapper>
       <Logo>
-        <span role="img" aria-label="music note">
-          🎵
-        </span>{" "}
+        <FaMusic style={{ fontSize: "1.25em", marginRight: "5%" }} />
         MusicApp
       </Logo>
       <Form onSubmit={handleSubmit}>
         <Input onChange={handleChange} type="text" />
         <Button type="submit">
-          <span role="img" aria-label="magnify">
-            🔍
-          </span>
+          <FaSistrix />
         </Button>
       </Form>
     </BarWrapper>

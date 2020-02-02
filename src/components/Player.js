@@ -2,6 +2,13 @@ import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import styled from "styled-components";
+import {
+  FaPlay,
+  FaPause,
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+  FaMarsDouble
+} from "react-icons/fa";
 
 const PlayerWrapper = styled.div`
   width: 100%;
@@ -43,11 +50,14 @@ const ProgressBar = styled.div`
 const Progress = styled.div`
   border-radius: 50px;
   background: #044b7a;
-  flex-basis: 50%;
+  flex-basis: 0%;
 `;
 
 const Buttons = styled.div`
   display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
   font-size: 1.25em;
 `;
 
@@ -55,7 +65,7 @@ const Button = styled.button`
   cursor: pointer;
   background: none;
   border: none;
-  font-size: 1em;
+  font-size: 1.5em;
   outline: none;
   transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
 
@@ -66,7 +76,7 @@ const Button = styled.button`
     transform: scale(1.1);
   }
 
-  &:nth-of-type(2) {
+  &:nth-child(2) {
     margin: 0 10%;
 
     @media (min-width: 768px) {
@@ -235,11 +245,15 @@ const Player = props => {
         <Progress id="progress" ref={progressRef}></Progress>
       </ProgressBar>
       <Buttons>
-        <Button onClick={playPrev}>prev</Button>
-        <Button onClick={handlePlayPause}>
-          {!isPlaying ? "play" : "pause"}
+        <Button onClick={playPrev}>
+          <FaAngleDoubleLeft />
         </Button>
-        <Button onClick={playNext}>next</Button>
+        <Button onClick={handlePlayPause}>
+          {!isPlaying ? <FaPlay /> : <FaPause />}
+        </Button>
+        <Button onClick={playNext}>
+          <FaAngleDoubleRight />
+        </Button>
       </Buttons>
       <VolumeBar ref={volumeBarRef} onClick={handleVolumeChange}>
         <Volume ref={volumeRef}></Volume>
