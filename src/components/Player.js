@@ -6,20 +6,19 @@ import {
   FaPlay,
   FaPause,
   FaAngleDoubleLeft,
-  FaAngleDoubleRight,
-  FaMarsDouble
+  FaAngleDoubleRight
 } from "react-icons/fa";
 
 const PlayerWrapper = styled.div`
   width: 100%;
-  height: 20vh;
+  height: 20%;
   background: #0569ac;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  position: fixed;
-  bottom: 0;
+  /* position: fixed;
+  bottom: 0; */
   padding: 1% 0;
 `;
 

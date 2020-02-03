@@ -7,13 +7,13 @@ import { FaMusic, FaSistrix } from "react-icons/fa";
 
 const BarWrapper = styled.div`
   width: 100%;
-  height: 10vh;
+  height: 10%;
   background: #18829c;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  top: 0;
+  /* position: fixed;
+  top: 0; */
   font-size: 1rem;
 
   /* @media (min-width: 768px) {
