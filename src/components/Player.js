@@ -11,13 +11,14 @@ import {
 
 const PlayerWrapper = styled.div`
   width: 100%;
-  height: 20%;
+  height: 25%;
   background: #0569ac;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   position: relative;
+  padding: 1% 0;
 `;
 
 const Canvas = styled.canvas`
@@ -29,7 +30,7 @@ const Canvas = styled.canvas`
 `;
 
 const ProgressBar = styled.div`
-  height: 10%;
+  height: 7%;
   min-height: 10px;
   border-radius: 50px;
   background: hsla(244, 0%, 100%, 0.5);

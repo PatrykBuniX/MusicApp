@@ -19,16 +19,18 @@ const Logo = styled.p`
   flex: 1;
   max-width: 250px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   font-size: 1em;
   font-weight: bold;
+  margin-left: 5%;
 `;
 
 const Form = styled.form`
   flex: 1;
   max-width: 250px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  margin-right: 5%;
 `;
 
 const Input = styled.input`

@@ -5,8 +5,7 @@ import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  /* margin: 10vh 0 20vh 0; */
-  height: 70%;
+  height: 65%;
   width: 100vw;
   flex: 1 1 auto;
   position: relative;
