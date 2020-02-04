@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const rapidapiKey = "e3650c6f8dmsh887cb309606fb83p1d642bjsnd3e1655cd54d";
+import rapidapiKey from "../../apiKey";
 const base = "https://deezerdevs-deezer.p.rapidapi.com";
 
 export const fetchSongs = query => {
