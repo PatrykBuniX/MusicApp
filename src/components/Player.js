@@ -17,16 +17,13 @@ const PlayerWrapper = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  /* position: fixed;
-  bottom: 0; */
-  padding: 1% 0;
+  position: relative;
 `;
 
 const Canvas = styled.canvas`
   width: 100%;
   height: 100%;
   position: absolute;
-  z-index: -1;
   top: 0;
   left: 0;
 `;
@@ -40,6 +37,7 @@ const ProgressBar = styled.div`
   max-width: 700px;
   display: flex;
   cursor: pointer;
+  z-index: 1;
   transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
 
   &:hover {
@@ -58,6 +56,7 @@ const Buttons = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 1.25em;
+  z-index: 1;
 `;
 
 const Button = styled.button`
@@ -98,6 +97,7 @@ const VolumeBar = styled.div`
   max-width: 400px;
   display: flex;
   cursor: pointer;
+  z-index: 1;
   transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
 
   &:hover {
@@ -156,6 +156,7 @@ const Player = props => {
   }, [WIDTH, HEIGHT]);
 
   const getAudioData = async () => {
+    console.log("wowoow");
     if (!audio.current.captureStream) return;
     const stream = audio.current.captureStream();
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -164,7 +165,7 @@ const Player = props => {
     analyzer = audioCtx.createAnalyser();
     source.connect(analyzer);
 
-    analyzer.fftSize = 2 ** 8;
+    analyzer.fftSize = 2 ** 9;
 
     bufferLength = analyzer.frequencyBinCount;
     const frequencyData = new Uint8Array(bufferLength);

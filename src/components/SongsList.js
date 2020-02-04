@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { fetchMoreSongs } from "../redux/actions/songsActions";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
@@ -28,8 +28,9 @@ const ListItem = styled.li`
   margin: 1% auto;
   width: 90%;
   max-width: 500px;
-  height: 15%;
-  max-height: 70px;
+  height: 12%;
+  max-height: 80px;
+  min-height: 65px;
   background: hsla(0, 0%, 100%, 0.25);
   border-bottom: 4px solid black;
   display: flex;
@@ -65,13 +66,13 @@ const Album = styled.img`
 `;
 
 const Link = styled.a`
+  pointer-events: auto;
   color: blue;
   text-decoration: none;
 `;
 
 const SongsList = props => {
   const handleClick = e => {
-    console.dir(e.target);
     if (e.target.tagName === "A") return;
     const { index } = e.target.dataset;
     props.setTrackIndex(Number(index));
@@ -99,7 +100,7 @@ const SongsList = props => {
                   onClick={e => handleClick(e)}
                   key={i}
                 >
-                  <div>
+                  <div style={{ pointerEvents: "none" }}>
                     <Title>{song.title_short}</Title>
                     <Artist>{song.artist.name}</Artist>
                     <Link

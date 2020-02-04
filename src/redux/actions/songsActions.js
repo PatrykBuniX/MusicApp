@@ -11,6 +11,7 @@ export const fetchSongs = query => {
       const res = await axios.get(url, {
         method: "GET",
         headers: {
+          "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
           "x-rapidapi-key": rapidapiKey
         }
       });
@@ -35,6 +36,7 @@ export const fetchMoreSongs = query => {
       const res = await axios.get(url, {
         method: "GET",
         headers: {
+          "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
           "x-rapidapi-key": rapidapiKey
         }
       });
