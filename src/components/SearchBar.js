@@ -12,13 +12,7 @@ const BarWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* position: fixed;
-  top: 0; */
   font-size: 1rem;
-
-  /* @media (min-width: 768px) {
-    justify-content: flex-start;
-  } */
 `;
 
 const Logo = styled.p`

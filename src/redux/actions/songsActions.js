@@ -15,6 +15,7 @@ export const fetchSongs = query => {
         }
       });
       const { data: songs } = res.data;
+      console.log(typeof songs, songs);
       dispatch({
         type: "GET_SONGS",
         songs,
@@ -28,6 +29,7 @@ export const fetchSongs = query => {
 };
 
 export const fetchMoreSongs = query => {
+  console.log(`query: ${query}`);
   return async (dispatch, getState) => {
     if (!query) return;
     const url = `${base}/search?q=${query}&index=${getState().songs.index}`;
@@ -46,6 +48,37 @@ export const fetchMoreSongs = query => {
         songs,
         index: newIndex,
         lastQuery: query
+      });
+    } catch (err) {
+      dispatch({ type: "GET_SONGS_ERROR", err });
+    }
+  };
+};
+
+export const fetchAlbum = id => {
+  return async dispatch => {
+    if (!id) return;
+    const url = `${base}/album/${id}`;
+    try {
+      const res = await axios.get(url, {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+          "x-rapidapi-key": rapidapiKey
+        }
+      });
+      const { tracks, cover } = res.data;
+      const songs = [...tracks.data];
+      for (let song of songs) {
+        song.album = {};
+        song.album.cover = cover;
+      }
+      console.log("songggggsssss", songs);
+      dispatch({
+        type: "GET_SONGS",
+        songs,
+        index: 0,
+        lastQuery: null
       });
     } catch (err) {
       dispatch({ type: "GET_SONGS_ERROR", err });

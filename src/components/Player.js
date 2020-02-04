@@ -127,15 +127,6 @@ const Player = props => {
   let analyzer;
   let bufferLength;
 
-  const handlePlayPause = () => {
-    if (!audio.current.src) return;
-    if (isPlaying) {
-      props.togglePlay(false);
-    } else {
-      props.togglePlay(true);
-    }
-  };
-
   useEffect(() => {
     audio.current.volume = 0.5;
   }, []);
@@ -190,6 +181,15 @@ const Player = props => {
     });
 
     requestAnimationFrame(() => drawFrequency(frequencyData));
+  };
+
+  const handlePlayPause = () => {
+    if (!audio.current.src) return;
+    if (isPlaying) {
+      props.togglePlay(false);
+    } else {
+      props.togglePlay(true);
+    }
   };
 
   const playPrev = () => {

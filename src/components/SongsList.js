@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchMoreSongs } from "../redux/actions/songsActions";
+import { fetchMoreSongs, fetchAlbum } from "../redux/actions/songsActions";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import styled from "styled-components";
 
@@ -73,10 +73,18 @@ const Link = styled.a`
 
 const SongsList = props => {
   const handleClick = e => {
-    if (e.target.tagName === "A") return;
-    const { index } = e.target.dataset;
+    const { tagName, dataset } = e.target;
+    if (tagName === "A" || tagName === "IMG") return;
+    const { index } = dataset;
     props.setTrackIndex(Number(index));
     props.togglePlay(true);
+  };
+
+  const handleAlbumClick = e => {
+    const { index } = e.target.parentElement.dataset;
+    const { songs } = props.state.songs;
+    const { id, title, cover, tracklist } = songs[index].album;
+    props.loadAlbum(id);
   };
 
   const { songs, lastQuery } = props.state.songs;
@@ -111,11 +119,15 @@ const SongsList = props => {
                       link
                     </Link>
                   </div>
-                  <Album alt="album" src={song.album.cover} />
+                  <Album
+                    onClick={handleAlbumClick}
+                    alt="album"
+                    src={song.album.cover}
+                  />
                 </ListItem>
               );
             })}
-          {songs.length >= 1 && (
+          {songs.length >= 1 && lastQuery && (
             <ListItem>
               <Button onClick={() => props.loadMore(lastQuery)}>
                 load more...
@@ -135,6 +147,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadMore: query => dispatch(fetchMoreSongs(query)),
+    loadAlbum: id => dispatch(fetchAlbum(id)),
     setTrackIndex: src => dispatch(setTrackIndex(src)),
     togglePlay: isPlaying => dispatch(togglePlay(isPlaying))
   };

@@ -3,6 +3,7 @@ const initState = { songs: [], index: 0, lastQuery: null, activeSong: "" };
 const songsReducer = (state = initState, action) => {
   switch (action.type) {
     case "GET_SONGS":
+      console.log(action.songs);
       console.log("get songs", action.songs, action.index, action.lastQuery);
       return {
         songs: [...action.songs],
