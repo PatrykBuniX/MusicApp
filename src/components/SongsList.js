@@ -84,6 +84,8 @@ const SongsList = props => {
     const { index } = e.target.parentElement.dataset;
     const { songs } = props.state.songs;
     const { id } = songs[index].album;
+    props.setTrackIndex(0);
+    props.togglePlay(false);
     props.loadAlbum(id);
   };
 
