@@ -1,9 +1,15 @@
+## 🎵 MusicApp
+
+Simple React Application build with Redux and Deezer API
+
 ## To test the App:
 
--clone repo: `git clone https://github.com/PatrykBuniX/MusicApp.git`
+_You have to generate your own rapidapi key for deezer to make it works_
 
--install all dependencies: `npm install`
+👉 clone repo: `git clone https://github.com/PatrykBuniX/MusicApp.git`
 
--start app using script: `npm start`
+👉 install all dependencies: `npm install`
 
--open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+👉 start app using script: `npm start`
+
+👉 open [http://localhost:3000](http://localhost:3000) to view it in the browser.
