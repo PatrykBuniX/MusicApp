@@ -198,7 +198,7 @@ const Player = props => {
   };
   const playNext = () => {
     const lastIndex = playlist.length - 1;
-    const newIndex = trackIndex < lastIndex ? trackIndex + 1 : lastIndex;
+    const newIndex = trackIndex < lastIndex ? trackIndex + 1 : 0; //if playing last song, play first one on next
     props.setTrackIndex(newIndex);
   };
 
