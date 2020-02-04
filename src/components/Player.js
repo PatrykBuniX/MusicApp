@@ -147,7 +147,6 @@ const Player = props => {
   }, [WIDTH, HEIGHT]);
 
   const getAudioData = async () => {
-    console.log("wowoow");
     if (!audio.current.captureStream) return;
     const stream = audio.current.captureStream();
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -220,7 +219,6 @@ const Player = props => {
     e.persist();
     const { width, left } = volumeBarRef.current.getBoundingClientRect();
     const percent = (e.pageX - left) / width;
-    console.log(percent);
     audio.current.volume = percent;
     volumeRef.current.style.flexBasis = `${percent * 100}%`;
   };

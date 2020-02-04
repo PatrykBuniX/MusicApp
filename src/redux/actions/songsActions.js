@@ -15,7 +15,6 @@ export const fetchSongs = query => {
         }
       });
       const { data: songs } = res.data;
-      console.log(typeof songs, songs);
       dispatch({
         type: "GET_SONGS",
         songs,
@@ -29,7 +28,6 @@ export const fetchSongs = query => {
 };
 
 export const fetchMoreSongs = query => {
-  console.log(`query: ${query}`);
   return async (dispatch, getState) => {
     if (!query) return;
     const url = `${base}/search?q=${query}&index=${getState().songs.index}`;
@@ -73,7 +71,6 @@ export const fetchAlbum = id => {
         song.album = {};
         song.album.cover = cover;
       }
-      console.log("songggggsssss", songs);
       dispatch({
         type: "GET_SONGS",
         songs,
