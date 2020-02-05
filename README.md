@@ -13,3 +13,5 @@ _You have to generate your own rapidapi key for deezer to make it works_
 👉 start app using script: `npm start`
 
 👉 open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+🔥Take a look at online demo: [https://music-app-pg.netlify.com/](https://music-app-pg.netlify.com/)🔥
