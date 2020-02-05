@@ -2,73 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchMoreSongs, fetchAlbum } from "../redux/actions/songsActions";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
-import styled from "styled-components";
-
-const Wrapper = styled.div`
-  height: 65%;
-  width: 100vw;
-  flex: 1 1 auto;
-  position: relative;
-  background: linear-gradient(to bottom, #18829c 0%, #0569ac 100%);
-`;
-
-const List = styled.ul`
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  list-style-type: none;
-  height: 100%;
-  width: 100%;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const ListItem = styled.li`
-  margin: 1% auto;
-  width: 90%;
-  max-width: 500px;
-  height: 12%;
-  max-height: 80px;
-  min-height: 65px;
-  background: hsla(0, 0%, 100%, 0.25);
-  border-bottom: 4px solid black;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95),
-    background 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-`;
-
-const Button = styled.button`
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: none;
-  cursor: pointer;
-  border: none;
-`;
-
-const Title = styled.p`
-  font-size: 1.1em;
-`;
-const Artist = styled.p`
-  font-size: 0.9em;
-`;
-
-const Album = styled.img`
-  height: 100%;
-  border-left: 2px solid black;
-`;
-
-const Link = styled.a`
-  pointer-events: auto;
-  color: blue;
-  text-decoration: none;
-`;
+import {
+  Wrapper,
+  List,
+  ListItem,
+  LoadMoreButton,
+  Title,
+  Artist,
+  Album,
+  Link
+} from "../StyledComponents";
 
 const SongsList = props => {
   const handleClick = e => {
@@ -130,9 +73,9 @@ const SongsList = props => {
             })}
           {songs.length >= 1 && lastQuery && (
             <ListItem>
-              <Button onClick={() => props.loadMore(lastQuery)}>
+              <LoadMoreButton onClick={() => props.loadMore(lastQuery)}>
                 load more...
-              </Button>
+              </LoadMoreButton>
             </ListItem>
           )}
         </List>
