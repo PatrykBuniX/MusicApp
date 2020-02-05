@@ -65,7 +65,7 @@ const Player = props => {
     analyzer = audioCtx.createAnalyser();
     source.connect(analyzer);
 
-    analyzer.fftSize = 2 ** 9;
+    analyzer.fftSize = 2 ** 7;
 
     bufferLength = analyzer.frequencyBinCount;
     const frequencyData = new Uint8Array(bufferLength);
