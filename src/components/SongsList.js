@@ -45,6 +45,12 @@ const SongsList = props => {
         <List>
           {songs &&
             songs.map((song, i) => {
+              const {
+                title_short: title,
+                artist: { name },
+                preview,
+                album: { cover }
+              } = song;
               return (
                 <ListItem
                   style={checkActive(i)}
@@ -53,21 +59,17 @@ const SongsList = props => {
                   key={i}
                 >
                   <div style={{ pointerEvents: "none" }}>
-                    <Title>{song.title_short}</Title>
-                    <Artist>{song.artist.name}</Artist>
+                    <Title>{title}</Title>
+                    <Artist>{name}</Artist>
                     <Link
                       rel="noopener noreferrer"
                       target="_blank"
-                      href={song.preview}
+                      href={preview}
                     >
                       link
                     </Link>
                   </div>
-                  <Album
-                    onClick={handleAlbumClick}
-                    alt="album"
-                    src={song.album.cover}
-                  />
+                  <Album onClick={handleAlbumClick} alt="album" src={cover} />
                 </ListItem>
               );
             })}
