@@ -33,21 +33,16 @@ const ProgressBar = styled.div`
   height: 7%;
   min-height: 10px;
   border-radius: 50px;
-  background: hsla(244, 0%, 100%, 0.5);
+  background: hsla(244, 0%, 100%, 0.9);
   width: 80%;
   max-width: 700px;
   display: flex;
   cursor: pointer;
   z-index: 1;
-  transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
-
-  &:hover {
-    transform: scale(1.05);
-  }
 `;
 const Progress = styled.div`
   border-radius: 50px;
-  background: #044b7a;
+  background: #022740;
   flex-basis: 0%;
 `;
 
@@ -93,21 +88,16 @@ const VolumeBar = styled.div`
   height: 5%;
   min-height: 5px;
   border-radius: 50px;
-  background: hsla(244, 0%, 100%, 0.5);
+  background: hsla(244, 0%, 100%, 0.9);
   width: 60%;
   max-width: 400px;
   display: flex;
   cursor: pointer;
   z-index: 1;
-  transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
-
-  &:hover {
-    transform: scale(1.05);
-  }
 `;
 const Volume = styled.div`
   border-radius: 50px;
-  background: #044b7a;
+  background: #022740;
   flex-basis: 50%;
 `;
 

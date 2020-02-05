@@ -25,3 +25,6 @@ yarn-error.log*
 # Deezer API Key
 
 /src/apiKey.js
+
+# Local Netlify folder
+.netlify
