@@ -26,7 +26,6 @@ export const BarWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1rem;
 `;
 export const Logo = styled.p`
   flex: 1;
@@ -118,6 +117,7 @@ export const LoadMoreButton = styled.button`
   background: none;
   cursor: pointer;
   border: none;
+  outline: none;
 `;
 export const Title = styled.p`
   font-size: 1.1em;
@@ -204,6 +204,7 @@ export const Button = styled.button`
 export const CurrentTrack = styled.p`
   color: white;
   font-size: 1em;
+  z-index: 1;
 `;
 export const VolumeBar = styled.div`
   height: 5%;
