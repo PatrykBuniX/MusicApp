@@ -164,6 +164,7 @@ export const ProgressBar = styled.div`
   display: flex;
   cursor: pointer;
   z-index: 1;
+  position: relative;
 `;
 export const Progress = styled.div`
   border-radius: 50px;
@@ -216,6 +217,8 @@ export const VolumeBar = styled.div`
   display: flex;
   cursor: pointer;
   z-index: 1;
+  position: relative;
+  font-size: 1.5em;
 `;
 export const Volume = styled.div`
   border-radius: 50px;

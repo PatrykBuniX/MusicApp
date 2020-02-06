@@ -17,7 +17,9 @@ import {
   FaPlay,
   FaPause,
   FaAngleDoubleLeft,
-  FaAngleDoubleRight
+  FaAngleDoubleRight,
+  FaVolumeOff,
+  FaVolumeUp
 } from "react-icons/fa";
 
 const Player = props => {
@@ -31,6 +33,8 @@ const Player = props => {
   const progressBarRef = useRef(null);
   const volumeRef = useRef(null);
   const volumeBarRef = useRef(null);
+  const timeRef = useRef(null);
+  const durationRef = useRef(null);
 
   const WIDTH = 1000;
   const HEIGHT = 1000;
@@ -69,6 +73,7 @@ const Player = props => {
 
     bufferLength = analyzer.frequencyBinCount;
     const frequencyData = new Uint8Array(bufferLength);
+    durationRef.current.innerText = setTimeStamp(audio.current.duration);
     drawFrequency(frequencyData);
   };
 
@@ -115,6 +120,9 @@ const Player = props => {
     const { currentTime, duration } = audio.current;
     const percent = (currentTime / duration) * 100;
     progressRef.current.style.flexBasis = `${percent}%`;
+    setTimeStamp(currentTime);
+    durationRef.current.innerText = setTimeStamp(duration);
+    timeRef.current.innerText = setTimeStamp(currentTime);
   };
 
   const handleProgressChange = e => {
@@ -131,6 +139,15 @@ const Player = props => {
     const percent = (e.pageX - left) / width;
     audio.current.volume = percent;
     volumeRef.current.style.flexBasis = `${percent * 100}%`;
+  };
+
+  const setTimeStamp = secs => {
+    if (!secs) {
+      secs = 0;
+    }
+    const mins = Math.floor(secs / 60);
+    secs = Math.floor(secs % 60);
+    return `${mins < 10 ? "0" + mins : mins}:${secs < 10 ? "0" + secs : secs}`;
   };
 
   return (
@@ -150,7 +167,19 @@ const Player = props => {
           : "..."}
       </CurrentTrack>
       <ProgressBar id="bar" ref={progressBarRef} onClick={handleProgressChange}>
+        <span
+          style={{ position: "absolute", left: 0, top: "100%" }}
+          ref={timeRef}
+        >
+          00:00
+        </span>
         <Progress id="progress" ref={progressRef}></Progress>
+        <span
+          style={{ position: "absolute", right: 0, top: "100%" }}
+          ref={durationRef}
+        >
+          00:00
+        </span>
       </ProgressBar>
       <Buttons>
         <Button onClick={playPrev}>
@@ -164,7 +193,17 @@ const Player = props => {
         </Button>
       </Buttons>
       <VolumeBar ref={volumeBarRef} onClick={handleVolumeChange}>
+        <FaVolumeOff
+          style={{ position: "absolute", left: "-10%", top: "-50%" }}
+        />
         <Volume ref={volumeRef}></Volume>
+        <FaVolumeUp
+          style={{
+            position: "absolute",
+            right: "-10%",
+            top: "-50%"
+          }}
+        />
       </VolumeBar>
     </PlayerWrapper>
   );
