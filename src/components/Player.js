@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
+import { setTimeStamp } from "../utils";
 import {
   PlayerWrapper,
   Canvas,
@@ -139,15 +140,6 @@ const Player = props => {
     const percent = (e.pageX - left) / width;
     audio.current.volume = percent;
     volumeRef.current.style.flexBasis = `${percent * 100}%`;
-  };
-
-  const setTimeStamp = secs => {
-    if (!secs) {
-      secs = 0;
-    }
-    const mins = Math.floor(secs / 60);
-    secs = Math.floor(secs % 60);
-    return `${mins < 10 ? "0" + mins : mins}:${secs < 10 ? "0" + secs : secs}`;
   };
 
   return (
