@@ -59,7 +59,9 @@ const SongsList = props => {
                   key={i}
                 >
                   <div style={{ pointerEvents: "none" }}>
-                    <Title>{title}</Title>
+                    <Title>
+                      {title.length > 23 ? title.slice(0, 23) + "..." : title}
+                    </Title>
                     <Artist>{name}</Artist>
                     <Link
                       rel="noopener noreferrer"

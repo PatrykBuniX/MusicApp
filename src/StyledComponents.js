@@ -10,9 +10,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 export const AppWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  height: calc(var(--vh, 100vh));
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -203,6 +201,7 @@ export const Button = styled.button`
   }
 `;
 export const CurrentTrack = styled.p`
+  text-align: center;
   color: white;
   font-size: 1em;
   z-index: 1;
@@ -216,9 +215,8 @@ export const VolumeBar = styled.div`
   max-width: 400px;
   display: flex;
   cursor: pointer;
-  z-index: 1;
   position: relative;
-  font-size: 1.5em;
+  margin: 0 2.5%;
 `;
 export const Volume = styled.div`
   border-radius: 50px;

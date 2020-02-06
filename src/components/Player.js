@@ -184,19 +184,22 @@ const Player = props => {
           <FaAngleDoubleRight />
         </Button>
       </Buttons>
-      <VolumeBar ref={volumeBarRef} onClick={handleVolumeChange}>
-        <FaVolumeOff
-          style={{ position: "absolute", left: "-10%", top: "-50%" }}
-        />
-        <Volume ref={volumeRef}></Volume>
-        <FaVolumeUp
-          style={{
-            position: "absolute",
-            right: "-10%",
-            top: "-50%"
-          }}
-        />
-      </VolumeBar>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "1.5em",
+          zIndex: 1
+        }}
+      >
+        <FaVolumeOff />
+        <VolumeBar ref={volumeBarRef} onClick={handleVolumeChange}>
+          <Volume ref={volumeRef}></Volume>
+        </VolumeBar>
+        <FaVolumeUp />
+      </div>
     </PlayerWrapper>
   );
 };
