@@ -1,90 +1,89 @@
-import axios from "axios";
-import rapidapiKey from "../../apiKey";
-const base = "https://deezerdevs-deezer.p.rapidapi.com";
+import { getSongs, getMoreSongs, getAlbum } from "../../apiCalls";
+
+const fetchingSongsStart = () => ({
+  type: "FETCHING_SONGS_START"
+});
+const fetchingSongsSuccess = result => ({
+  type: "FETCHING_SONGS_SUCCESS",
+  payload: result
+});
+const fetchingMoreSongsSuccess = result => ({
+  type: "FETCHING_MORE_SONGS_SUCCESS",
+  payload: result
+});
+const fetchingSongsError = error => ({
+  type: "FETCHING_SONGS_ERROR",
+  payload: error
+});
 
 export const fetchSongs = query => {
   return async dispatch => {
-    if (!query) return;
-    const url = `${base}/search?q=${query}&index=0`;
+    dispatch(fetchingSongsStart());
     try {
-      const res = await axios.get(url, {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
-          "x-rapidapi-key": rapidapiKey
-        }
-      });
-      const { data: songs } = res.data;
-      dispatch({
-        type: "GET_SONGS",
-        songs,
-        index: 0,
-        lastQuery: query
-      });
-    } catch (err) {
-      dispatch({ type: "GET_SONGS_ERROR", err });
+      const songs = await getSongs(query);
+      dispatch(
+        fetchingSongsSuccess({
+          songs,
+          index: 0,
+          lastQuery: query,
+          isFetching: false
+        })
+      );
+    } catch (error) {
+      dispatch(
+        fetchingSongsError({
+          errorMessage: error.response.data.message,
+          isFetching: false
+        })
+      );
     }
   };
 };
 
-export const fetchMoreSongs = query => {
-  return async (dispatch, getState) => {
-    if (!query) return;
-    const url = `${base}/search?q=${query}&index=${getState().songs.index}`;
+export const fetchMoreSongs = (query, index) => {
+  return async dispatch => {
+    dispatch(fetchingSongsStart());
     try {
-      const res = await axios.get(url, {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
-          "x-rapidapi-key": rapidapiKey
-        }
-      });
-      const newIndex = getState().songs.index + 25;
-      const { data: songs } = res.data;
-      dispatch({
-        type: "GET_MORE_SONGS",
-        songs,
-        index: newIndex,
-        lastQuery: query
-      });
-    } catch (err) {
-      dispatch({ type: "GET_SONGS_ERROR", err });
+      const data = await getMoreSongs(query, index);
+      dispatch(
+        fetchingMoreSongsSuccess({
+          songs: data.songs,
+          index: data.index,
+          lastQuery: query,
+          isFetching: false
+        })
+      );
+    } catch (error) {
+      dispatch(
+        fetchingSongsError({
+          errorMessage: error.response.data.message,
+          isFetching: false
+        })
+      );
     }
   };
 };
 
 export const fetchAlbum = id => {
   return async dispatch => {
-    if (!id) return;
-    const url = `${base}/album/${id}`;
+    dispatch(fetchingSongsStart());
     try {
-      const res = await axios.get(url, {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
-          "x-rapidapi-key": rapidapiKey
-        }
-      });
-      const { tracks, cover } = res.data;
-      const songs = [...tracks.data];
-      for (let song of songs) {
-        song.album = {};
-        song.album.cover = cover;
-      }
-      dispatch({
-        type: "GET_SONGS",
-        songs,
-        index: 0,
-        lastQuery: null
-      });
-    } catch (err) {
-      dispatch({ type: "GET_SONGS_ERROR", err });
+      const songs = await getAlbum(id);
+      dispatch(
+        fetchingSongsSuccess({
+          songs,
+          lastQuery: "",
+          isFetching: false
+        })
+      );
+    } catch (error) {
+      console.log(error);
+      dispatch(
+        fetchingSongsError({
+          errorMessage: error.response.data.message,
+          isFetching: false
+        })
+      );
     }
-  };
-};
-
-export const setSongs = elements => {
-  return dispatch => {
-    dispatch({ type: "SET_SONGS", elements: elements });
   };
 };

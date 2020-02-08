@@ -2,17 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import { setTimeStamp } from "../utils";
-import {
-  PlayerWrapper,
-  Canvas,
-  ProgressBar,
-  Progress,
-  Buttons,
-  Button,
-  CurrentTrack,
-  VolumeBar,
-  Volume
-} from "../StyledComponents";
+import styled from "styled-components";
 
 import {
   FaPlay,
@@ -22,6 +12,96 @@ import {
   FaVolumeOff,
   FaVolumeUp
 } from "react-icons/fa";
+
+const PlayerWrapper = styled.div`
+  width: 100%;
+  height: 25%;
+  background: #0569ac;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  padding: 1% 0;
+`;
+const Canvas = styled.canvas`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+const ProgressBar = styled.div`
+  height: 7%;
+  min-height: 10px;
+  border-radius: 50px;
+  background: hsla(244, 0%, 100%, 0.9);
+  width: 80%;
+  max-width: 700px;
+  display: flex;
+  cursor: pointer;
+  z-index: 1;
+  position: relative;
+`;
+const Progress = styled.div`
+  border-radius: 50px;
+  background: #022740;
+  flex-basis: 0%;
+`;
+const Buttons = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25em;
+  z-index: 1;
+`;
+const Button = styled.button`
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  outline: none;
+  transition: transform 0.2s cubic-bezier(0.14, 1.35, 0.54, 1.95);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:focus {
+    transform: scale(1.1);
+  }
+
+  &:nth-child(2) {
+    margin: 0 10%;
+
+    @media (min-width: 768px) {
+      margin: 0 5%;
+    }
+  }
+`;
+const CurrentTrack = styled.p`
+  text-align: center;
+  color: white;
+  font-size: 1em;
+  z-index: 1;
+`;
+const VolumeBar = styled.div`
+  height: 5%;
+  min-height: 5px;
+  border-radius: 50px;
+  background: hsla(244, 0%, 100%, 0.9);
+  width: 60%;
+  max-width: 400px;
+  display: flex;
+  cursor: pointer;
+  position: relative;
+  margin: 0 2.5%;
+`;
+const Volume = styled.div`
+  border-radius: 50px;
+  background: #022740;
+  flex-basis: 50%;
+`;
 
 const Player = props => {
   const { songs: playlist } = props.state.songs;
