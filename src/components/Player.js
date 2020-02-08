@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
 import { setTimeStamp } from "../utils";
 import styled from "styled-components";
+import { isIOS } from "react-device-detect";
 
 import {
   FaPlay,
@@ -86,7 +87,7 @@ const CurrentTrack = styled.p`
   z-index: 1;
 `;
 const VolumeBar = styled.div`
-  height: 5%;
+  height: 30%;
   min-height: 5px;
   border-radius: 50px;
   background: hsla(244, 0%, 100%, 0.9);
@@ -123,6 +124,7 @@ const Player = props => {
   let bufferLength;
 
   useEffect(() => {
+    console.log(isIOS);
     audio.current.volume = 0.5;
   }, []);
 
@@ -222,11 +224,16 @@ const Player = props => {
     volumeRef.current.style.flexBasis = `${percent * 100}%`;
   };
 
+  const handleMute = volume => {
+    audio.current.volume = volume;
+    volumeRef.current.style.flexBasis = `${volume * 100}%`;
+  };
+
   return (
     <PlayerWrapper>
       <audio
         onTimeUpdate={handleProgress}
-        onCanPlayThrough={getAudioData}
+        onCanPlayThrough={!isIOS && getAudioData}
         crossOrigin="anonymous"
         onEnded={playNext}
         ref={audio}
@@ -264,22 +271,30 @@ const Player = props => {
           <FaAngleDoubleRight />
         </Button>
       </Buttons>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: "1.5em",
-          zIndex: 1
-        }}
-      >
-        <FaVolumeOff />
-        <VolumeBar ref={volumeBarRef} onClick={handleVolumeChange}>
-          <Volume ref={volumeRef}></Volume>
-        </VolumeBar>
-        <FaVolumeUp />
-      </div>
+      {!isIOS && (
+        <div
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            fontSize: "1.5em",
+            zIndex: 1,
+            display: "flex"
+          }}
+        >
+          <FaVolumeOff
+            style={{ cursor: "pointer" }}
+            onClick={() => handleMute(0)}
+          />
+          <VolumeBar ref={volumeBarRef} onClick={handleVolumeChange}>
+            <Volume ref={volumeRef}></Volume>
+          </VolumeBar>
+          <FaVolumeUp
+            style={{ cursor: "pointer" }}
+            onClick={() => handleMute(1)}
+          />
+        </div>
+      )}
     </PlayerWrapper>
   );
 };
