@@ -81,10 +81,16 @@ const Button = styled.button`
   }
 `;
 const CurrentTrack = styled.p`
+  display: block;
   text-align: center;
   color: white;
   font-size: 1em;
   z-index: 1;
+  width: 100%;
+  padding: 0 5%;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 const VolumeBar = styled.div`
   height: 30%;

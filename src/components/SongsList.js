@@ -49,25 +49,27 @@ const LoadMoreButton = styled.button`
   outline: none;
 `;
 const Title = styled.p`
-  font-size: 1.1em;
+  flex: 1;
+  display: block;
+  font-size: 1.2em;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 const Artist = styled.p`
+  flex: 1;
   font-size: 0.9em;
+  font-style: italic;
 `;
 const Album = styled.img`
   height: 100%;
   border-left: 2px solid black;
 `;
-const Link = styled.a`
-  pointer-events: auto;
-  color: blue;
-  text-decoration: none;
-`;
 
 const SongsList = props => {
   const handleClick = e => {
     const { tagName, dataset } = e.target;
-    if (tagName === "A" || tagName === "IMG") return;
+    if (tagName === "IMG") return;
     const { index } = dataset;
     props.setTrackIndex(Number(index));
     props.togglePlay(true);
@@ -100,7 +102,6 @@ const SongsList = props => {
               const {
                 title_short: title,
                 artist: { name },
-                preview,
                 album: { cover }
               } = song;
               return (
@@ -110,18 +111,20 @@ const SongsList = props => {
                   onClick={e => handleClick(e)}
                   key={i}
                 >
-                  <div style={{ pointerEvents: "none" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      pointerEvents: "none",
+                      width: "100%",
+                      overflow: "hidden"
+                    }}
+                  >
                     <Title>
-                      {title.length > 23 ? title.slice(0, 23) + "..." : title}
+                      {title}
+                      {/* {title.length > 23 ? title.slice(0, 23) + "..." : title} */}
                     </Title>
                     <Artist>{name}</Artist>
-                    <Link
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      href={preview}
-                    >
-                      link
-                    </Link>
                   </div>
                   <Album onClick={handleAlbumClick} alt="album" src={cover} />
                 </ListItem>
