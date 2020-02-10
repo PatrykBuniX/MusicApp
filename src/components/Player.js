@@ -130,7 +130,6 @@ const Player = props => {
   let bufferLength;
 
   useEffect(() => {
-    console.log(isIOS);
     audio.current.volume = 0.5;
   }, []);
 

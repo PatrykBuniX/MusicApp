@@ -65,6 +65,7 @@ const SearchBar = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (!search) return;
     if (search === props.lastQuery) {
       props.getMoreSongs(search);
     } else {

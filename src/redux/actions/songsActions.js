@@ -77,7 +77,6 @@ export const fetchAlbum = id => {
         })
       );
     } catch (error) {
-      console.log(error);
       dispatch(
         fetchingSongsError({
           errorMessage: error.response.data.message,
