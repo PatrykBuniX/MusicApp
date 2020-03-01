@@ -43,6 +43,9 @@ const Input = styled.input`
   &:focus {
     transform: scale(1.1);
   }
+  &::placeholder {
+    color: #303030;
+  }
 `;
 const SubmitButton = styled.button`
   cursor: pointer;
@@ -86,7 +89,11 @@ const SearchBar = props => {
         MusicApp
       </Logo>
       <Form onSubmit={handleSubmit}>
-        <Input onChange={handleChange} type="text" />
+        <Input
+          placeholder="Search for songs..."
+          onChange={handleChange}
+          type="text"
+        />
         <SubmitButton type="submit">
           <FaSistrix />
         </SubmitButton>

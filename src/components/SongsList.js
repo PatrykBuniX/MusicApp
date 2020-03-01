@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchMoreSongs, fetchAlbum } from "../redux/actions/songsActions";
 import { setTrackIndex, togglePlay } from "../redux/actions/playerActions";
+import Loading from "./Loading";
 import styled from "styled-components";
+import { FaArrowUp } from "react-icons/fa";
 
 const Wrapper = styled.div`
   height: 65%;
@@ -85,7 +87,7 @@ const SongsList = props => {
     props.loadAlbum(id);
   };
 
-  const { songs, lastQuery, index } = props.state.songs;
+  const { songs, lastQuery, index, isFetching } = props.state.songs;
 
   const checkActive = index => {
     return Number(index) === props.state.player.trackIndex
@@ -93,43 +95,47 @@ const SongsList = props => {
       : null;
   };
 
+  console.log(isFetching);
+
   return (
     <Wrapper>
-      {
-        <List>
-          {songs &&
-            songs.map((song, i) => {
-              const {
-                title_short: title,
-                artist: { name },
-                album: { cover }
-              } = song;
-              return (
-                <ListItem
-                  style={checkActive(i)}
-                  data-index={i}
-                  onClick={e => handleClick(e)}
-                  key={i}
+      {isFetching && <Loading />}
+      {songs.length ? (
+        <List
+          style={isFetching ? { opacity: 0.4, pointerEvents: "none" } : null}
+        >
+          {songs.map((song, i) => {
+            const {
+              title_short: title,
+              artist: { name },
+              album: { cover }
+            } = song;
+            return (
+              <ListItem
+                style={checkActive(i)}
+                data-index={i}
+                onClick={e => handleClick(e)}
+                key={i}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    pointerEvents: "none",
+                    width: "100%",
+                    overflow: "hidden"
+                  }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      pointerEvents: "none",
-                      width: "100%",
-                      overflow: "hidden"
-                    }}
-                  >
-                    <Title>
-                      {title}
-                      {/* {title.length > 23 ? title.slice(0, 23) + "..." : title} */}
-                    </Title>
-                    <Artist>{name}</Artist>
-                  </div>
-                  <Album onClick={handleAlbumClick} alt="album" src={cover} />
-                </ListItem>
-              );
-            })}
+                  <Title>
+                    {title}
+                    {/* {title.length > 23 ? title.slice(0, 23) + "..." : title} */}
+                  </Title>
+                  <Artist>{name}</Artist>
+                </div>
+                <Album onClick={handleAlbumClick} alt="album" src={cover} />
+              </ListItem>
+            );
+          })}
           {songs.length >= 1 && lastQuery && (
             <ListItem>
               <LoadMoreButton onClick={() => props.loadMore(lastQuery, index)}>
@@ -138,7 +144,12 @@ const SongsList = props => {
             </ListItem>
           )}
         </List>
-      }
+      ) : (
+        <p style={{ textAlign: "center" }}>
+          Search for your favourite songs!{" "}
+          <FaArrowUp style={{ fontSize: "1.25em" }} />
+        </p>
+      )}
     </Wrapper>
   );
 };
