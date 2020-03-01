@@ -2,13 +2,11 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const PulseKeyframe = keyframes`
-    from{
-    width: 1.75em;
-    height: 1.75em;
+   from{
+    transform: translateY(0em);
   }
   to{
-    width: 2em;
-    height: 2em;
+    transform: translateY(1.75em);
   }
 `;
 const Wrapper = styled.div`
@@ -18,34 +16,23 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
+  font-size: 20px;
 `;
 const Blob = styled.span`
   position: relative;
-  height: 2rem;
-  width: 2rem;
+  height: 2.5rem;
+  width: 2.5rem;
   background: #044c7d;
   border-radius: 50%;
   animation: ${PulseKeyframe} 0.25s infinite alternate;
   z-index: 1;
 
-  &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 1.75rem;
-    width: 1.75rem;
-    transform: translate(-50%, -50%);
-    background: #0569ac;
-    border: 1px solid #044c7d;
-    border-radius: 50%;
-    animation: ${PulseKeyframe} 0.5s 0.5s infinite alternate ease-in-out;
-  }
-
   &:nth-child(2) {
-    z-index: 2;
+    margin: 0 0.25em;
+    animation-delay: 0.125s;
+  }
+  &:nth-child(3) {
+    animation-delay: 0.25s;
   }
 `;
 
