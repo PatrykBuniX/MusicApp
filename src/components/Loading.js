@@ -2,11 +2,11 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const PulseKeyframe = keyframes`
-    to{
+    from{
     width: 1.75em;
     height: 1.75em;
   }
-  from{
+  to{
     width: 2em;
     height: 2em;
   }
